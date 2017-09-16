@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorLightPurple">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_edit_profile_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:src="@drawable/ic_check_white_24dp"
+                android:background="@color/colorLightPurple"
+               />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:translationZ="2dp"
+        android:layout_centerInParent="true">
+        <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            layout="@layout/content_hint_progress"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_view_edit_profile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_edit_profile">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:layout_gravity="center">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/imv_edit_profile_photo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/ic_avatar_default"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true" />
+
+                <ImageView
+                    android:src="@drawable/ic_take_photo"
+                    android:translationZ="1dp"
+                    android:layout_alignRight="@+id/imv_edit_profile_photo"
+                    android:layout_alignEnd="@+id/imv_edit_profile_photo"
+                    android:layout_alignBottom="@+id/imv_edit_profile_photo"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    />
+
+            </RelativeLayout>
+
+           <com.muxistudio.muxiio.utils.ToggleButtonGroupTableLayout
+               android:id="@+id/toggle_button_group"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="@dimen/activity_horizontal_margin"
+               android:layout_marginStart="16dp"
+               android:layout_marginTop="32dp">
+               <TableRow>
+
+                   <RadioButton
+                       android:id="@+id/group_product"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:drawable="@drawable/color_radio_button"
+                       android:onClick="onRadioButtonClicked"
+                       android:text="@string/group_product"
+                       android:textColor="@color/colorLightPurple"
+                       android:textSize="16sp"
+                       />
+
+                   <RadioButton
+                       android:id="@+id/group_design"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:drawable="@drawable/color_radio_button"
+                       android:onClick="onRadioButtonClicked"
+                       android:text="@string/group_design"
+                       android:textColor="@color/colorLightPurple"
+                       android:textSize="16sp" />
+
+                   <RadioButton
+                       android:id="@+id/group_android"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:drawable="@drawable/color_radio_button"
+                       android:onClick="onRadioButtonClicked"
+                       android:text="@string/group_android"
+                       android:textColor="@color/colorLightPurple"
+                       android:textSize="16sp" />
+
+               </TableRow>
+
+               <TableRow>
+                   <RadioButton
+                       android:id="@+id/group_frontend"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:drawable="@drawable/color_radio_button"
+                       android:onClick="onRadioButtonClicked"
+                       android:text="@string/group_frontend"
+                       android:textColor="@color/colorLightPurple"
+                       android:textSize="16sp" />
+
+                   <RadioButton
+                       android:id="@+id/group_backend"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:drawable="@drawable/color_radio_button"
+                       android:onClick="onRadioButtonClicked"
+                       android:text="@string/group_backend"
+                       android:textColor="@color/colorLightPurple"
+                       android:textSize="16sp" />
+
+                   <RadioButton
+                       android:visibility="invisible"
+                       android:layout_weight="1"/>
+               </TableRow>
+
+           </com.muxistudio.muxiio.utils.ToggleButtonGroupTableLayout>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_blog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="@string/edit_blog"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple" />
+
+            <!--
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="@string/edit_email"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple" />
+                -->
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_start_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/profile_start_time"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_iconRight="@drawable/ic_keyboard_arrow_right_white_24dp"
+                app:met_primaryColor="@color/colorLightPurple" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_end_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/profile_end_time"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_iconRight="@drawable/ic_keyboard_arrow_right_white_24dp"
+                app:met_primaryColor="@color/colorLightPurple" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_duty"
+                android:layout_width="304dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:hint="@string/profile_duty"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="@string/profile_birthday"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_iconRight="@drawable/ic_keyboard_arrow_right_white_24dp"
+                app:met_primaryColor="@color/colorLightPurple" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_hometown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:clickable="true"
+                android:editable="false"
+                android:hint="@string/profile_home"
+                android:lines="1"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_iconRight="@drawable/ic_keyboard_arrow_right_white_24dp"
+                app:met_primaryColor="@color/colorLightPurple" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_introduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="@string/profile_introduction"
+                android:inputType="textMultiLine"
+                android:padding="8dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple" />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_weibo"
+                android:lines="1"
+                android:hint="@string/edit_weibo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_zhihu"
+                android:lines="1"
+                android:hint="@string/edit_zhihu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/edit_profile_github"
+                android:lines="1"
+                android:hint="@string/edit_github"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"
+                app:met_baseColor="@color/colorBlack"
+                app:met_errorColor="@color/colorRed"
+                app:met_primaryColor="@color/colorLightPurple"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:background="@color/colorTranslateBackground"
+        android:id="@+id/ll_calendar"
+        android:translationZ="1dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        >
+
+        <RelativeLayout
+            android:background="@color/colorLightPurple"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/calendar_year"
+                android:text="2017年"
+                android:textColor="@color/colorBackground"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/calendar_month_and_day"
+                android:text="4月13日 周四"
+                android:textColor="@color/colorWhite"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@+id/calendar_year"/>
+
+        </RelativeLayout>
+
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/calendar"
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:mcv_showOtherDates="all"
+            app:mcv_selectionColor="@color/colorLightPurple"
+            android:background="@color/colorWhite"
+            />
+
+        <RelativeLayout
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorWhite">
+
+            <Button
+                android:id="@+id/btn_date_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="170dp"
+                android:layout_marginStart="170dp"
+                android:background="@color/colorWhite"
+                android:text="@string/cancel"
+                android:textColor="@color/colorLightPurple"
+                android:textSize="14sp"
+                style="?android:attr/borderlessButtonStyle"/>
+
+            <Button
+                android:id="@+id/btn_date_confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/btn_date_cancel"
+                android:layout_toRightOf="@+id/btn_date_cancel"
+                android:background="@color/colorWhite"
+                android:text="@string/confirm"
+                android:textColor="@color/colorLightPurple"
+                android:textSize="14sp"
+                style="?android:attr/borderlessButtonStyle"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

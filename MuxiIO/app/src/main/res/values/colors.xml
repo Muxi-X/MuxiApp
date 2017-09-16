@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4754B0</color>
+    <color name="colorPrimaryDark">#3C4795</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorGray">#bdbdbd</color>
+    <color name="colorWhite">#FFFFFF</color>
+    
+    <color name="colorDarkPurple">#3C4795</color>
+    <color name="colorLightPurple">#4754B0</color>
+    <color name="colorTopTitlePurple">#4754B0</color>
+    <color name="colorTextPurple">#7885F8</color>
+    <color name="colorShareTitlePurple">#868BBE</color>
+    <color name="colorGreen">#50E3C2</color>
+    <color name="colorRed">#FF5C63</color>
+    <color name="colorCardView">#F9F9F9</color>
+    <color name="colorLighterGray">#F6F3F3</color>
+    <color name="colorShadow">#03000000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorBackground">#fafafa</color>
+    <color name="colorTranslateBackground">#88000000</color>
+</resources>

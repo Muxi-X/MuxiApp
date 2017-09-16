@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/colorWhite"
+        android:layout_centerInParent="true"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/alertTitle"
+            android:textSize="18sp"
+            android:textColor="@color/colorBlack"
+            android:text="@string/pick_title"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/alert_from_album"
+            android:text="@string/pick_album"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:layout_below="@+id/alertTitle"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/alert_from_camera"
+            android:text="@string/pick_camera"
+            android:textSize="14sp"
+            android:textColor="@color/colorBlack"
+            android:layout_below="@id/alert_from_album"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="24dp"/>
+
+    </RelativeLayout>

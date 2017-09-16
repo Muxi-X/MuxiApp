@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="129dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/messenger_avatar"
+        android:src="@drawable/ic_avatar_default"
+        android:layout_margin="16dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/messenger_date"
+        tools:text="@string/share_date_example"
+        android:textSize="12sp"
+        android:layout_below="@+id/messenger_title"
+        android:layout_marginTop="21dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/messenger_username"
+        tools:text="@string/share_name_example"
+        android:textSize="14sp"
+        android:textColor="@color/colorTextPurple"
+        android:layout_toRightOf="@id/messenger_avatar"
+        android:layout_toEndOf="@id/messenger_avatar"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="27dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/messenger_action"
+        android:text="@string/message_reply_share"
+        android:textSize="14sp"
+        android:textColor="@color/colorTextPurple"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="27dp"
+        android:layout_toRightOf="@id/messenger_username"
+        android:layout_toEndOf="@id/messenger_username"
+        />
+
+    <TextView
+        android:id="@+id/messenger_title"
+        tools:text="@string/share_title_example"
+        android:textSize="14sp"
+        android:textColor="@color/colorTextPurple"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:layout_marginTop="27dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_toRightOf="@id/messenger_action"
+        android:layout_toEndOf="@id/messenger_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/messenger_content"
+        tools:text="@string/comment"
+        android:textSize="12sp"
+        android:textColor="@color/colorBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/messenger_title"
+        android:layout_toRightOf="@+id/messenger_date"
+        android:layout_toEndOf="@+id/messenger_date"
+        android:layout_marginTop="20dp"
+        android:layout_alignLeft="@+id/messenger_username"
+        android:layout_alignStart="@+id/messenger_username"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="0dp"
+        android:paddingLeft="0dp"
+        android:paddingBottom="42dp"/>
+
+</RelativeLayout>

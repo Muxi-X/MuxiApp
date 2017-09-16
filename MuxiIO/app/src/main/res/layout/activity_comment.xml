@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.muxistudio.muxiio.listener.RelativeLayoutKeyBoardDetector
+    android:id="@+id/relaytivelayout_comment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/comment_toolbar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <RelativeLayout
+        android:id="@+id/commented_title"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_below="@id/comment_toolbar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/share_avatar"
+            android:src="@drawable/ic_avatar_default"
+            android:layout_margin="16dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/share_username"
+            tools:text="@string/share_name_example"
+            android:textSize="16sp"
+            android:textColor="@color/colorBlack"
+            android:layout_toRightOf="@id/share_avatar"
+            android:layout_toEndOf="@id/share_avatar"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/share_time"
+            tools:text="@string/share_date_example"
+            android:layout_toRightOf="@id/share_avatar"
+            android:layout_toEndOf="@id/share_avatar"
+            android:layout_alignLeft="@id/share_username"
+            android:layout_alignStart="@id/share_username"
+            android:layout_marginTop="6dp"
+            android:layout_below="@+id/share_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <include
+        layout="@layout/content_hint_progress"
+        />
+
+    <View
+       android:id="@+id/comment_divider1"
+       android:layout_below="@+id/commented_title"
+       android:background="@color/colorGray"
+       android:layout_width="match_parent"
+       android:layout_height="1dp"/>
+
+   <TextView
+       android:id="@+id/share_title"
+       tools:text="@string/share_title_example"
+       android:textSize="16sp"
+       android:textColor="@color/colorBlack"
+       android:layout_marginTop="32dp"
+       android:layout_marginLeft="16dp"
+       android:layout_marginStart="16dp"
+       android:layout_below="@+id/comment_divider1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/share_content"
+        tools:text="@string/share_link_example"
+        android:textColor="@color/colorTextPurple"
+        android:textSize="14sp"
+        android:layout_below="@+id/share_title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="0dp"
+        android:paddingStart="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/comment_divider2"
+        android:layout_below="@id/share_content"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorGray"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/comment_refresh"
+        android:layout_above="@+id/sender_container"
+        android:layout_below="@+id/comment_divider2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ListView
+            android:id="@+id/comment_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    <TextView
+        android:id="@+id/comment_empty_text"
+        android:visibility="gone"
+        android:text="@string/comment_nothing"
+        android:textColor="@color/colorLightPurple"
+        android:layout_below="@+id/comment_divider2"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:id="@+id/sender_container"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/comment_edit"
+            android:hint="@string/comment_write"
+            app:met_textColorHint="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginRight="16dp"
+            app:met_baseColor="@color/colorWhite"
+            app:met_primaryColor="@color/colorLightPurple" />
+
+        <ImageButton
+            android:id="@+id/comment_send"
+            android:src="@drawable/ic_send_comment"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/comment_divider2"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+        <include
+            android:visibility="gone"
+            layout="@layout/dialog_nothing"/>
+    </RelativeLayout>
+
+</com.muxistudio.muxiio.listener.RelativeLayoutKeyBoardDetector>

@@ -1,0 +1,124 @@
+<resources>
+    <string name="app_name">"木犀内外"</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+    <item type="id" name="frontBack"></item>
+    <string name="muxiIOtitle">"木犀内外"</string>
+    <string name="muxiIOUsername">"昵称"</string>
+    <string name="muxiIOUserPassword">"密码"</string>
+    <string name="muxiIOUserLogin">"登录"</string>
+    <string name="confirm_sharing">确认</string>
+
+    <string name="pick_title">选择头像</string>
+    <string name="pick_album">相册</string>
+    <string name="pick_camera">拍照</string>
+
+    <string name="shared">分享了</string>
+    <string name="share_delete">删除</string>
+    <string name="share_edit">修改</string>
+    <string name="share_comment">评论</string>
+    <string name="share_openlink">打开链接</string>
+
+    <string name="message_hint">条未读</string>
+    <string name="message_reply_share">回复了分享：</string>
+    <string name="message_edit_share">修改了分享：</string>
+    <string name="message_post_share">发表了分享：</string>
+
+    //storage
+    <item type="string" name="userName">1</item>
+    <item type="string" name="userPassword">2</item>
+    <item type="string" name="authToken">3</item>
+    <item type="integer" name="authUserId">4</item>
+    <item type="integer" name="last_time_message_number">5</item>
+
+    <string name="profile_name">我是昵称</string>
+    <string name="profile_blog">博客：</string>
+    <string name="profile_blog_example">https://stackoverflow.com</string>
+    <string name="profile_email">邮箱：</string>
+    <string name="profile_email_example">https://stackoverflow.com</string>
+    <string name="profile_group">XX组</string>
+    <string name="profile_start_time">加入时间</string>
+    <string name="profile_start_time_example">2017/01/01</string>
+    <string name="profile_end_time">离开时间</string>
+    <string name="profile_end_time_example">2017/06/01</string>
+    <string name="profile_duty">职务信息</string>
+    <string name="profile_duty_example">扫地工</string>
+    <string name="profile_birthday">生日</string>
+    <string name="profile_birthday_example">1999/01/01</string>
+    <string name="profile_home">家乡</string>
+    <string name="profile_home_example">火星</string>
+    <string name="profile_introduction">个人介绍</string>
+    <string name="profile_introduction_example">这个人好懒呀，什么都没有留下(ಗ ‸ ಗ )</string>
+    <string name="profile_my_sharing">我的分享</string>
+
+    <string name="others_profile_name">别人的名字</string>
+    <string name="others_profile_sharing">的分享</string>
+    <string name="edit_profile">编辑个人信息</string>
+    <string name="group_design">设计组</string>
+    <string name="group_product">产品组</string>
+    <string name="group_android">安卓组</string>
+    <string name="group_frontend">前端组</string>
+    <string name="group_backend">后台组</string>
+    <string name="edit_name">昵称</string>
+    <string name="edit_blog">博客</string>
+    <string name="edit_email">邮箱</string>
+    <string name="edit_weibo">微博</string>
+    <string name="edit_zhihu">知乎</string>
+    <string name="edit_github">Github</string>
+    <string name="choose_city">请选择省市</string>
+
+    <string name="cancel">取消</string>
+    <string name="confirm">确定</string>
+    <string name="add_sharing">新建分享</string>
+    <string name="theme_sharing">分享主题</string>
+    <string name="product">PRODUCT</string>
+    <string name="design">DESIGN</string>
+    <string name="android">ANDROID</string>
+    <string name="frontend">FRONTEND</string>
+    <string name="backend">BACKEND</string>
+
+    <string name="one_share_title_example">设计规范的价值</string>
+    <string name="one_share_date_example">2017/01/01</string>
+    <string name="one_share_time_example">18:40</string>
+    <string name="one_share_text_example">这里是凑字数的，假装这里是个链接就好233。</string>
+
+    <string name="share_name_example">我是昵称</string>
+    <string name="share_time_example">23:20</string>
+    <string name="share_date_example">08/30</string>
+    <string name="share_title_example">这是一个标题</string>
+    <string name="share_link_example">https://stackoverflow.com</string>
+
+    <string name="login_no_account">没有账号，去注册 ></string>
+    <string name="register_name">昵称</string>
+    <string name="register_name_hint">由中文、英文和数字组成</string>
+    <string name="register_email">邮箱</string>
+    <string name="register_password">密码</string>
+    <string name="register_password_hint">8～16个字符</string>
+    <string name="register_confirm_password">确认密码</string>
+    <string name="register">注册</string>
+    <string name="register_account_exist">已有账号，去登陆 ></string>
+
+    <string name="comment_write">写评论...</string>
+    <string name="comment_nothing">这里什么都没有</string>
+    <string name="comment">这里是个评论</string>
+
+    <string name="nothing">这里空空如也……</string>
+
+    <string name="share_group_android">ANDROID</string>
+    <string name="share_group_backend">BACKEND</string>
+    <string name="share_group_design">DESIGN</string>
+    <string name="share_group_frontend">FRONTEND</string>
+    <string name="share_group_product">PRODUCT</string>
+    <string name="share_group_all">ALL</string>
+
+    <string name="recycler_footer">下滑加载</string>
+
+    <string name="drawer_share">分享</string>
+    <string name="drawer_logout">退出登录</string>
+    <string name="drawer_status">进度</string>
+    <string name="drawer_message">提醒</string>
+    <string name="drawer_muxi">木犀大法好！</string>
+
+
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLighterGray"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.muxistudio.muxiio.ui.ShareActivity"
+    tools:showIn="@layout/app_bar_share"
+    android:id="@+id/cl_share">
+
+   <android.support.v4.widget.SwipeRefreshLayout
+       android:id="@+id/shareaci_swipelayout"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content">
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/shareaci_recyc"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+
+      </android.support.v7.widget.RecyclerView>
+   </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="center">
+        <include
+            layout="@layout/content_hint_progress"
+            />
+    </RelativeLayout>
+
+   <android.support.design.widget.FloatingActionButton
+       android:id="@+id/share_btn"
+       app:pressedTranslationZ="4dp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_gravity="bottom|end"
+       android:background="@color/colorRed"
+       app:layout_anchor="@id/shareaci_swipelayout"
+       app:layout_anchorGravity="bottom|right|end"
+       android:layout_margin="16dp"
+       android:src="@drawable/ic_add"
+       app:fabSize="normal"
+       app:borderWidth="0dp"/>
+</android.support.design.widget.CoordinatorLayout>

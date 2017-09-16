@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/textView2"
+        android:src="@mipmap/muxititle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:layout_width="199dp"
+        android:layout_height="30dp"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/login_usernameedit"
+        android:lines="1"
+        android:hint="@string/register_name"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignLeft="@+id/login_userpassworedit"
+        android:layout_alignStart="@+id/login_userpassworedit"
+        app:met_floatingLabelText="@string/register_name_hint"
+        app:met_primaryColor="@color/colorLightPurple"
+        app:met_baseColor="@color/colorLightPurple"
+        app:met_errorColor="@color/colorAccent"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/login_useremailedit"
+        android:hint="@string/register_email"
+        android:lines="1"
+        android:layout_below="@+id/login_usernameedit"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:met_primaryColor="@color/colorLightPurple"
+        app:met_baseColor="@color/colorLightPurple"
+        />
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/login_userpassworedit"
+        android:lines="1"
+        android:hint="@string/register_password"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/login_useremailedit"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:met_floatingLabelText="@string/register_password_hint"
+        app:met_primaryColor="@color/colorLightPurple"
+        app:met_baseColor="@color/colorLightPurple"
+        app:met_errorColor="@color/colorAccent"/>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/register_reuserpasswordedit"
+        android:lines="1"
+        android:hint="@string/register_confirm_password"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@+id/login_userpassworedit"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:met_primaryColor="@color/colorLightPurple"
+        app:met_baseColor="@color/colorLightPurple"
+        app:met_errorColor="@color/colorAccent"/>
+
+    <Button
+        android:id="@+id/register_register"
+        android:text="@string/register"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:shadowRadius="3"
+        android:shadowDy="5"
+        android:shadowDx="3"
+        android:background="@drawable/loginbutton"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/register_reuserpasswordedit"
+        android:layout_marginTop="16dp"
+        android:layout_width="93dp"
+        android:layout_height="36dp" />
+
+    <TextView
+        android:id="@+id/register_goto_login"
+        android:layout_below="@+id/register_register"
+        android:text="@string/register_account_exist"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+</RelativeLayout>

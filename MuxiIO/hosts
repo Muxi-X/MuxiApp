@@ -1,0 +1,12 @@
+127.0.0.1       localhost
+::1             ip6-localhost
+
+
+120.77.246.73 blog.muxixyz.test
+120.77.246.73 share.muxixyz.test
+120.77.246.73 book.muxixyz.test
+120.77.246.73 auth.muxixyz.test
+120.77.246.73 profile.muxixyz.test
+120.77.246.73 api.muxixyz.test
+120.77.246.73 i.muxixyz.test
+

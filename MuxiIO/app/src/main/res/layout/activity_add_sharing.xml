@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_add_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorLightPurple">
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorLightPurple"
+        app:tabMode="scrollable"
+        app:tabTextColor="@color/colorGray"
+        app:tabMaxWidth="128dp"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabIndicatorHeight="2dp"
+        app:tabIndicatorColor="@color/colorGreen">
+    </android.support.design.widget.TabLayout>
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/txv_add_sharing_theme"
+        android:maxLines="1"
+        android:hint="@string/theme_sharing"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:met_baseColor="@color/colorShareTitlePurple"
+        app:met_errorColor="@color/colorRed"
+        app:met_primaryColor="@color/colorLightPurple"
+        />
+
+    <View
+        android:background="@color/colorGray"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edt_add_sharing_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/colorBackground" />
+
+    <View
+        android:background="@color/colorGray"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="180dp"/>
+
+    <Button
+        android:id="@+id/btn_add_sharing_confirm"
+        android:text="@string/confirm_sharing"
+        android:textColor="@color/colorWhite"
+        android:textSize="14sp"
+        android:shadowRadius="3"
+        android:shadowDy="5"
+        android:shadowDx="3"
+        android:background="@drawable/loginbutton"
+        android:layout_width="96dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        />
+</LinearLayout>

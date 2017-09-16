@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/drawer_share" />
+        <item
+            android:id="@+id/action_message"
+            android:icon="@drawable/ic_message"
+            android:title="@string/drawer_message" />
+        <item
+            android:id="@+id/action_status"
+            android:icon="@drawable/ic_progress"
+            android:title="@string/drawer_status" />
+        <item
+            android:id="@+id/action_logout"
+            android:icon="@drawable/ic_logout"
+            android:title="@string/drawer_logout" />
+
+        <item
+            android:id="@+id/action_hidden"
+            android:icon="@mipmap/muxiicon"
+            android:title="@string/drawer_muxi" />
+
+
+</menu>
+<!--
+ <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="分享" />
+        <item
+            android:id="@+id/action_message"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="提醒" />
+        <item
+            android:id="@+id/action_status"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="进度" />
+        <item
+            android:id="@+id/action_logout"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="退出登录" />
+-->

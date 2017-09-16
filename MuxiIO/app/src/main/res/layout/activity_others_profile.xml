@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_others_profile"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorLightPurple">
+        <!--
+        <ImageButton
+            android:id="@+id/btn_others_profile_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:background="@color/colorLightPurple"/>
+            -->
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/rl_others_profile_above"
+        android:background="@color/colorLightPurple"
+        android:layout_width="match_parent"
+        android:layout_height="162dp"
+        android:layout_below="@id/toolbar_others_profile">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imv_others_profile_photo"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_profile_photo"
+            app:civ_border_color="@color/colorShadow"
+            app:civ_border_width="0.5dp" />
+
+        <TextView
+            android:text="@string/profile_blog"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="46dp"
+            android:layout_marginStart="46dp"
+            android:layout_toRightOf="@id/imv_others_profile_photo"
+            android:layout_toEndOf="@id/imv_others_profile_photo" />
+
+        <TextView
+            android:id="@+id/txv_others_profile_blog"
+            android:singleLine="true"
+            tools:text="@string/profile_blog_example"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="98dp"
+            android:layout_marginStart="98dp"
+            android:layout_toRightOf="@id/imv_others_profile_photo"
+            android:layout_toEndOf="@id/imv_others_profile_photo"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"/>
+
+        <TextView
+            android:text="@string/profile_email"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="46dp"
+            android:layout_marginStart="46dp"
+            android:layout_below="@+id/txv_others_profile_blog"
+            android:layout_toRightOf="@id/imv_others_profile_photo"
+            android:layout_toEndOf="@id/imv_others_profile_photo"/>
+
+        <TextView
+            android:id="@+id/txv_others_profile_email"
+            tools:text="@string/profile_blog_example"
+            android:singleLine="true"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="98dp"
+            android:layout_marginStart="98dp"
+            android:layout_below="@+id/txv_others_profile_blog"
+            android:layout_toRightOf="@id/imv_others_profile_photo"
+            android:layout_toEndOf="@id/imv_others_profile_photo"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_others_profile_weibo"
+            android:src="@drawable/ic_weibo"
+            android:alpha="0.5"
+            android:background="@color/colorLightPurple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="46dp"
+            android:layout_marginStart="46dp"
+            android:layout_below="@+id/txv_others_profile_email"
+            android:layout_toRightOf="@id/imv_others_profile_photo"
+            android:layout_toEndOf="@id/imv_others_profile_photo"/>
+
+        <ImageButton
+            android:id="@+id/btn_others_profile_zhihu"
+            android:src="@drawable/ic_zhihu"
+            android:alpha="0.5"
+            android:background="@color/colorLightPurple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_below="@+id/txv_others_profile_email"
+            android:layout_toRightOf="@id/btn_others_profile_weibo"
+            android:layout_toEndOf="@id/btn_others_profile_weibo" />
+
+        <ImageButton
+            android:id="@+id/btn_others_profile_github"
+            android:src="@drawable/ic_github"
+            android:alpha="0.5"
+            android:background="@color/colorLightPurple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_below="@+id/txv_others_profile_email"
+            android:layout_toRightOf="@id/btn_others_profile_zhihu"
+            android:layout_toEndOf="@id/btn_others_profile_zhihu" />
+
+        <TextView
+            android:id="@+id/txv_others_profile_name"
+            tools:text="@string/profile_name"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_below="@id/imv_others_profile_photo"
+            />
+
+        <View
+            android:id="@+id/line_vertical2"
+            android:layout_width="4dp"
+            android:layout_height="17dp"
+            android:layout_alignLeft="@+id/btn_others_profile_weibo"
+            android:layout_alignStart="@+id/btn_others_profile_weibo"
+            android:layout_below="@id/imv_others_profile_photo"
+            android:layout_marginTop="45dp"
+            android:layout_toRightOf="@id/txv_others_profile_name"
+            android:layout_toEndOf="@id/txv_others_profile_name"
+            android:background="@color/colorGreen"/>
+
+        <TextView
+            android:id="@+id/txv_others_profile_group"
+            tools:text="@string/profile_group"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="44dp"
+            android:layout_below="@id/imv_others_profile_photo"
+            android:layout_toRightOf="@id/line_vertical2"
+            android:layout_toEndOf="@id/line_vertical2"/>
+
+        <TextView
+            android:id="@+id/txv_others_profile_duty"
+            tools:text="@string/profile_duty_example"
+            android:textSize="14sp"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="46dp"
+            android:layout_below="@id/imv_others_profile_photo"
+            android:layout_toRightOf="@id/txv_others_profile_group"
+            android:layout_toEndOf="@id/txv_others_profile_group"
+            android:paddingRight="16dp"
+            android:paddingEnd="16dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
+            />
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/content_hint_progress"
+        />
+    <ScrollView
+        android:layout_below="@id/rl_others_profile_above"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_others_profile_middle"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="90dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/profile_start_time"
+                    android:textColor="@color/colorTextPurple"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    />
+                <TextView
+                    android:id="@+id/txv_others_profile_start_time"
+                    tools:text="@string/profile_start_time_example"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="22dp"
+                android:background="@color/colorGray"
+                />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/profile_end_time"
+                    android:textColor="@color/colorTextPurple"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"/>
+
+                <TextView
+                    android:id="@+id/txv_others_profile_end_time"
+                    tools:text="@string/profile_end_time_example"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/colorGray"
+                android:layout_below="@id/ll_others_profile_middle"/>
+
+            <TextView
+                android:text="@string/profile_birthday"
+                android:textColor="@color/colorTextPurple"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@id/ll_others_profile_middle"/>
+
+            <TextView
+                android:id="@+id/txv_others_profile_birthday"
+                tools:text="@string/profile_birthday_example"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="17dp"
+                android:layout_below="@id/ll_others_profile_middle"/>
+
+            <TextView
+                android:text="@string/profile_home"
+                android:textColor="@color/colorTextPurple"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_below="@id/txv_others_profile_birthday"/>
+
+            <TextView
+                android:id="@+id/txv_others_profile_home"
+                tools:text="@string/profile_home_example"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="56dp"
+                android:layout_marginStart="56dp"
+                android:layout_marginTop="9dp"
+                android:layout_below="@id/txv_others_profile_birthday"/>
+
+            <TextView
+                android:text="@string/profile_introduction"
+                android:textColor="@color/colorTextPurple"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="26dp"
+                android:layout_below="@id/txv_others_profile_home"/>
+
+            <TextView
+                android:id="@+id/txv_others_profile_introduction"
+                tools:text="@string/profile_introduction_example"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="54dp"
+                android:paddingRight="16dp"
+                android:paddingEnd="16dp"
+                android:paddingLeft="0dp"
+                android:paddingStart="0dp"
+                android:layout_below="@id/txv_others_profile_home"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@color/colorGray"
+                android:layout_below="@id/txv_others_profile_introduction"/>
+
+            <TextView
+                android:id="@+id/txv_profile_others_sharing"
+                tools:text="@string/others_profile_name"
+                android:textColor="@color/colorTextPurple"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="34dp"
+                android:layout_below="@id/txv_others_profile_introduction" />
+
+            <TextView
+                android:text="@string/others_profile_sharing"
+                android:textColor="@color/colorTextPurple"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/txv_profile_others_sharing"
+                android:layout_toEndOf="@+id/txv_profile_others_sharing"
+                android:layout_marginTop="34dp"
+                android:layout_below="@id/txv_others_profile_introduction" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:background="@color/colorGray"
+                android:layout_below="@id/txv_profile_others_sharing"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txv_profile_others_sharing"
+                android:layout_marginTop="@dimen/activity_vertical_margin">
+
+                <include layout="@layout/content_one_share"
+                    android:id="@+id/rv_others_sharing"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+
