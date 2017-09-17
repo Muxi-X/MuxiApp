@@ -74,18 +74,18 @@ import rx.schedulers.Schedulers;
 
 public class EditProfileActivity extends AppCompatActivity {
     private boolean isGranted = false;
-    private String userAvatarUrl = UserInfo.userAvatarUrl;
-    private String address;
-    private String date1;
-    private String date2;
-    private String date3;
-    private String selectedDate;
-    private String defaultGroup;
-    private static final  int PERMISSION_GRANTED = 200;
+    private String mUserAvatarUrl = UserInfo.userAvatarUrl;
+    private String mAddress;
+    private String mDate1;
+    private String mDate2;
+    private String mDate3;
+    private String mSelectedDate;
+    private String mDefaultGroup ;
+    private static final int PERMISSION_GRANTED = 200;
     //pick up from photo
-    private Uri imageUri;
+    private Uri mImageUri;
 
-    private AlertDialog alertDialog;
+    private AlertDialog mAlertDialog;
 
     //count down
     private int countDownTime = 10;
@@ -115,65 +115,61 @@ public class EditProfileActivity extends AppCompatActivity {
      * UI
      */
     @BindView(R.id.group_android)
-    RadioButton rBtnAndroid;
+    RadioButton mRbtnAndroid;
     @BindView(R.id.group_frontend)
-    RadioButton rBtnFrontEnd;
+    RadioButton mRbtnFrontEnd;
     @BindView(R.id.group_backend)
-    RadioButton rBtnBackEnd;
+    RadioButton mRbtnBackEnd;
     @BindView(R.id.group_product)
-    RadioButton rBtnProduct;
+    RadioButton mRbtnProduct;
     @BindView(R.id.group_design)
-    RadioButton rBtnDesign;
+    RadioButton mRbtnDesign;
     @BindView(R.id.uploading_hint)
-    RelativeLayout rlEditProfileUploading;
+    RelativeLayout mRlEditProfileUploading;
     @BindView(R.id.toggle_button_group)
-    ToggleButtonGroupTableLayout toggleButtonGroup;
+    ToggleButtonGroupTableLayout mToggleButtonGroup;
     @BindView(R.id.info_uploading)
-    ProgressBar upLoadingProgress;
+    ProgressBar mUpLoadingProgress;
     @BindView(R.id.ll_calendar)
-    LinearLayout llCalendar;
+    LinearLayout mLlCalendar;
     @BindView(R.id.calendar_year)
-    TextView calendarYear;
+    TextView mCalendarYear;
     @BindView(R.id.calendar_month_and_day)
-    TextView calendarMonthAndDay;
+    TextView mCalendarMonthAndDay;
     @BindView(R.id.calendar)
-    MaterialCalendarView calendar;
+    MaterialCalendarView mCalendar;
     @BindView(R.id.btn_date_cancel)
-    Button btnDateCancel;
+    Button mBtnDateCancel;
     @BindView(R.id.btn_date_confirm)
-    Button btnDateConfirm;
+    Button mBtnDateConfirm;
     @BindView(R.id.imv_edit_profile_photo)
-    CircleImageView imvEditProfilePhoto;
+    CircleImageView mImvEditProfilePhoto;
     @BindView(R.id.scroll_view_edit_profile)
-    ScrollView scrollViewEditProfile;
+    ScrollView mScrollViewEditProfile;
     @BindView(R.id.btn_edit_profile_confirm)
-    ImageButton btnEditProfileConfirm;
+    ImageButton mBtnEditProfileConfirm;
     @BindView(R.id.toolbar_edit_profile)
-    Toolbar toolbarEditProfile;
-    //@BindView(R.id.edit_profile_name)
-    //MaterialEditText editProfileName;
+    Toolbar mToolbarEditProfile;
     @BindView(R.id.edit_profile_blog)
-    MaterialEditText editProfileBlog;
-    //@BindView(R.id.edit_profile_email)
-    //MaterialEditText editProfileEmail;
+    MaterialEditText mEditProfileBlog;
     @BindView(R.id.edit_profile_start_time)
-    MaterialEditText editProfileStartTime;
+    MaterialEditText mEditProfileStartTime;
     @BindView(R.id.edit_profile_end_time)
-    MaterialEditText editProfileEndTime;
+    MaterialEditText mEditProfileEndTime;
     @BindView(R.id.edit_profile_duty)
-    MaterialEditText editProfileDuty;
+    MaterialEditText mEditProfileDuty;
     @BindView(R.id.edit_profile_birthday)
-    MaterialEditText editProfileBirthday;
+    MaterialEditText mEditProfileBirthday;
     @BindView(R.id.edit_profile_hometown)
-    MaterialEditText editProfileHometown;
+    MaterialEditText mEditProfileHometown;
     @BindView(R.id.edit_profile_introduction)
-    MaterialEditText editProfileIntroduction;
+    MaterialEditText mEditProfileIntroduction;
     @BindView(R.id.edit_profile_weibo)
-    MaterialEditText editProfileWeibo;
+    MaterialEditText mEditProfileWeibo;
     @BindView(R.id.edit_profile_zhihu)
-    MaterialEditText editProfileZhihu;
+    MaterialEditText mEditProfileZhihu;
     @BindView(R.id.edit_profile_github)
-    MaterialEditText editProfileGithub;
+    MaterialEditText mEditProfileGithub;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -199,11 +195,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
         getDataBefore();
 
-        rBtnAndroid.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
-        rBtnBackEnd.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
-        rBtnFrontEnd.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
-        rBtnDesign.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
-        rBtnProduct.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
+        mRbtnAndroid.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
+        mRbtnBackEnd.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
+        mRbtnFrontEnd.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
+        mRbtnDesign.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
+        mRbtnProduct.setOnCheckedChangeListener(new RadioOnCheckChangedListener());
 
 
     }
@@ -234,58 +230,57 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
     public void initToolbar() {
-        toolbarEditProfile.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-        toolbarEditProfile.setTitle("编辑个人信息");
-        toolbarEditProfile.setTitleMarginStart(40);
-        toolbarEditProfile.setTitleMarginTop(20);
-        setSupportActionBar(toolbarEditProfile);
+        mToolbarEditProfile.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        mToolbarEditProfile.setTitle("编辑个人信息");
+        mToolbarEditProfile.setTitleMarginStart(40);
+        mToolbarEditProfile.setTitleMarginTop(20);
+        setSupportActionBar(mToolbarEditProfile);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void getDataBefore() {
-        defaultGroup = UserInfo.userGroup;
-        if ("android".equals(defaultGroup) || "安卓组".equals(defaultGroup)) {
-            rBtnAndroid.setChecked(true);
-        } else if ("frontend".equals(defaultGroup) || "前端组".equals(defaultGroup)) {
-            rBtnFrontEnd.setChecked(true);
-        } else if ("backend".equals(defaultGroup) || "后台组".equals(defaultGroup)) {
-            rBtnBackEnd.setChecked(true);
-        } else if ("product".equals(defaultGroup) || "产品组".equals(defaultGroup)) {
-            rBtnProduct.setChecked(true);
-        } else if ("design".equals(defaultGroup) || "设计组".equals(defaultGroup)) {
-            rBtnDesign.setChecked(true);
-        } else if (defaultGroup.equals("design") || defaultGroup.equals("设计组")) {
+        mDefaultGroup = UserInfo.userGroup;
+        if ("android".equals(mDefaultGroup) || "安卓组".equals(mDefaultGroup)) {
+            mRbtnAndroid.setChecked(true);
+        } else if ("frontend".equals(mDefaultGroup) || "前端组".equals(mDefaultGroup)) {
+            mRbtnFrontEnd.setChecked(true);
+        } else if ("backend".equals(mDefaultGroup) || "后台组".equals(mDefaultGroup)) {
+            mRbtnBackEnd.setChecked(true);
+        } else if ("product".equals(mDefaultGroup) || "产品组".equals(mDefaultGroup)) {
+            mRbtnProduct.setChecked(true);
+        } else if ("design".equals(mDefaultGroup) || "设计组".equals(mDefaultGroup)) {
+            mRbtnDesign.setChecked(true);
+        } else if (mDefaultGroup.equals("design") || mDefaultGroup.equals("设计组")) {
            ToastUtils.showShort("请你选择组别 ");
         }else {
-            rBtnAndroid.setChecked(false);
-            rBtnFrontEnd.setChecked(false);
-            rBtnBackEnd.setChecked(false);
-            rBtnProduct.setChecked(false);
-            rBtnDesign.setChecked(false);
+            mRbtnAndroid.setChecked(false);
+            mRbtnFrontEnd.setChecked(false);
+            mRbtnBackEnd.setChecked(false);
+            mRbtnProduct.setChecked(false);
+            mRbtnDesign.setChecked(false);
         }
-        //editProfileName.setText(UserInfo.username);
-        editProfileBlog.setText(UserInfo.userPersonalBlog);
-        //editProfileEmail.setText(UserInfo.userEmail);
-        editProfileStartTime.setText(UserInfo.userTimeJoin);
-        editProfileEndTime.setText(UserInfo.userTimeLeft);
-        editProfileDuty.setText(UserInfo.userFlickr);
-        editProfileBirthday.setText(UserInfo.userBirthday);
-        editProfileHometown.setText(UserInfo.userHometown);
-        editProfileIntroduction.setText(UserInfo.userInfo);
-        editProfileWeibo.setText(UserInfo.userWeibo);
-        editProfileZhihu.setText(UserInfo.userZhihu);
-        editProfileGithub.setText(UserInfo.userGithub);
 
-        Picasso.with(EditProfileActivity.this).load(UserInfo.userAvatarUrl).into(imvEditProfilePhoto);
+        mEditProfileBlog.setText(UserInfo.userPersonalBlog);
+        mEditProfileStartTime.setText(UserInfo.userTimeJoin);
+        mEditProfileEndTime.setText(UserInfo.userTimeLeft);
+        mEditProfileDuty.setText(UserInfo.userFlickr);
+        mEditProfileBirthday.setText(UserInfo.userBirthday);
+        mEditProfileHometown.setText(UserInfo.userHometown);
+        mEditProfileIntroduction.setText(UserInfo.userInfo);
+        mEditProfileWeibo.setText(UserInfo.userWeibo);
+        mEditProfileZhihu.setText(UserInfo.userZhihu);
+        mEditProfileGithub.setText(UserInfo.userGithub);
+
+        Picasso.with(EditProfileActivity.this).load(UserInfo.userAvatarUrl).into(mImvEditProfilePhoto);
     }
 
     public void getDataNew() {
-        UserInfo.userFlickr = editProfileDuty.getText().toString();
-        UserInfo.userInfo = editProfileIntroduction.getText().toString();
-        UserInfo.userPersonalBlog = editProfileBlog.getText().toString();
-        UserInfo.userGithub = editProfileGithub.getText().toString();
-        UserInfo.userWeibo = editProfileWeibo.getText().toString();
-        UserInfo.userZhihu = editProfileZhihu.getText().toString();
+        UserInfo.userFlickr = mEditProfileDuty.getText().toString();
+        UserInfo.userInfo = mEditProfileIntroduction.getText().toString();
+        UserInfo.userPersonalBlog = mEditProfileBlog.getText().toString();
+        UserInfo.userGithub = mEditProfileGithub.getText().toString();
+        UserInfo.userWeibo = mEditProfileWeibo.getText().toString();
+        UserInfo.userZhihu = mEditProfileZhihu.getText().toString();
     }
 
 
@@ -295,16 +290,16 @@ public class EditProfileActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_date_cancel:
-                llCalendar.setVisibility(View.GONE);
+                mLlCalendar.setVisibility(View.GONE);
                 break;
             case R.id.btn_date_confirm:
-                editProfileStartTime.setText(date1);
-                UserInfo.userTimeJoin = editProfileStartTime.getText().toString();
-                editProfileEndTime.setText(date2);
-                UserInfo.userTimeLeft = editProfileEndTime.getText().toString();
-                editProfileBirthday.setText(date3);
-                UserInfo.userBirthday = editProfileBirthday.getText().toString();
-                llCalendar.setVisibility(View.GONE);
+                mEditProfileStartTime.setText(mDate1);
+                UserInfo.userTimeJoin = mEditProfileStartTime.getText().toString();
+                mEditProfileEndTime.setText(mDate2);
+                UserInfo.userTimeLeft = mEditProfileEndTime.getText().toString();
+                mEditProfileBirthday.setText(mDate3);
+                UserInfo.userBirthday = mEditProfileBirthday.getText().toString();
+                mLlCalendar.setVisibility(View.GONE);
                 break;
 
             case R.id.btn_edit_profile_confirm:
@@ -312,7 +307,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 postProfile();
                 //compare two avatar url
                 //userAvatarUrl is the new url if the avatar is changed and uploaded
-                if(!UserInfo.userAvatarUrl.equals(userAvatarUrl)){
+                if(!UserInfo.userAvatarUrl.equals(mUserAvatarUrl)){
                     //changeShareAvatar();
                 }
                 Intent intent = new Intent(EditProfileActivity.this, MyProfileActivity.class);
@@ -326,35 +321,35 @@ public class EditProfileActivity extends AppCompatActivity {
                 View alertView = inflater.inflate(R.layout.alert_pick_photo, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
                 builder.setView(alertView);
-                alertDialog = builder.create();
-                alertDialog.show();
-                TextView pickFromAlbum = (TextView) alertDialog.findViewById(R.id.alert_from_album);
-                TextView pickFromCamera = (TextView) alertDialog.findViewById(R.id.alert_from_camera);
+                mAlertDialog = builder.create();
+                mAlertDialog.show();
+                TextView pickFromAlbum = (TextView) mAlertDialog.findViewById(R.id.alert_from_album);
+                TextView pickFromCamera = (TextView) mAlertDialog.findViewById(R.id.alert_from_camera);
                 pickFromAlbum.setOnClickListener(new OnAlertClickListener());
                 pickFromCamera.setOnClickListener(new OnAlertClickListener());
                 break;
 
             case R.id.edit_profile_start_time:
                 initCalendarFirst();
-                llCalendar.setVisibility(View.VISIBLE);
-                llCalendar.bringChildToFront(llCalendar);
+                mLlCalendar.setVisibility(View.VISIBLE);
+                mLlCalendar.bringChildToFront(mLlCalendar);
                 break;
 
             case R.id.edit_profile_end_time:
                 initCalendarSecond();
-                llCalendar.setVisibility(View.VISIBLE);
-                llCalendar.bringChildToFront(llCalendar);
+                mLlCalendar.setVisibility(View.VISIBLE);
+                mLlCalendar.bringChildToFront(mLlCalendar);
                 break;
 
             case R.id.edit_profile_birthday:
                 initCalendarThird();
-                llCalendar.setVisibility(View.VISIBLE);
-                llCalendar.bringChildToFront(llCalendar);
+                mLlCalendar.setVisibility(View.VISIBLE);
+                mLlCalendar.bringChildToFront(mLlCalendar);
                 break;
 
             case R.id.edit_profile_hometown:
                 pickAddress();
-                UserInfo.userHometown = editProfileHometown.getText().toString();
+                UserInfo.userHometown = mEditProfileHometown.getText().toString();
                 break;
         }
     }
@@ -367,8 +362,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     try {
                         CameraUtils.display(EditProfileActivity.this
-                                , imageUri, imvEditProfilePhoto);
-                        Bitmap bitmap = ((BitmapDrawable) imvEditProfilePhoto.getDrawable()).getBitmap();
+                                , mImageUri, mImvEditProfilePhoto);
+                        Bitmap bitmap = ((BitmapDrawable) mImvEditProfilePhoto.getDrawable()).getBitmap();
                         File file = createCompressedBitmapFile(9000000, bitmap);
                         upLoadPic(file);
                     } catch (Exception e) {
@@ -380,10 +375,10 @@ public class EditProfileActivity extends AppCompatActivity {
             case CameraUtils.OPEN_ALBUM:
                 if (resultCode != RESULT_CANCELED) {
                     if (resultCode != RESULT_CANCELED&&isGranted) {
-                        upLoadingProgress.setVisibility(View.VISIBLE);
+                        mUpLoadingProgress.setVisibility(View.VISIBLE);
                         String imagePath = CameraUtils.handlImageOnKitKat(EditProfileActivity.this,
                                 data);
-                        CameraUtils.display(imagePath, imvEditProfilePhoto);
+                        CameraUtils.display(imagePath, mImvEditProfilePhoto);
                         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
                         File file = null;
                         try {
@@ -446,8 +441,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 String district = citySelected[2];
                 //邮编
                 String code = citySelected[3];
-                address = province + " " + city;
-                editProfileHometown.setText(address);
+                mAddress = province + " " + city;
+                mEditProfileHometown.setText(mAddress);
             }
 
             @Override
@@ -459,52 +454,52 @@ public class EditProfileActivity extends AppCompatActivity {
     public void getCurrentDate() {
         String currentYear = new SimpleDateFormat("yyyy").format(new Date());
         String currentDate = new SimpleDateFormat("MM-dd EEE").format(new Date());
-        calendarYear.setText(currentYear);
-        calendarMonthAndDay.setText(currentDate);
+        mCalendarYear.setText(currentYear);
+        mCalendarMonthAndDay.setText(currentDate);
     }
     // The calendar I used existed bug and the month of it was wrong.
     public void initCalendarFirst() {
         getCurrentDate();
-        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
+        mCalendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay select, boolean selected) {
-                selectedDate = select.toString();
-                String string[] = selectedDate.split("\\{|\\}");
+                mSelectedDate = select.toString();
+                String string[] = mSelectedDate.split("\\{|\\}");
                 String s = string[1]; //2017-8-14
                 String string1[] = s.split("-");
                 int tempMonth = Integer.parseInt(string1[1]);
                 String month = Integer.toString(tempMonth + 1);
-                date1 = string1[0] + "-" + month + "-" + string1[2];
+                mDate1 = string1[0] + "-" + month + "-" + string1[2];
             }
         });
     }
     public void initCalendarSecond() {
         getCurrentDate();
-        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
+        mCalendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay select, boolean selected) {
-                selectedDate = select.toString();
-                String string[] = selectedDate.split("\\{|\\}");
+                mSelectedDate = select.toString();
+                String string[] = mSelectedDate.split("\\{|\\}");
                 String s = string[1];
                 String string1[] = s.split("-");
                 int tempMonth = Integer.parseInt(string1[1]);
                 String month = Integer.toString(tempMonth + 1);
-                date2 = string1[0] + "-" + month + "-" + string1[2];
+                mDate2 = string1[0] + "-" + month + "-" + string1[2];
             }
         });
     }
     public void initCalendarThird() {
         getCurrentDate();
-        calendar.setOnDateChangedListener(new OnDateSelectedListener() {
+        mCalendar.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay select, boolean selected) {
-                selectedDate = select.toString();
-                String string[] = selectedDate.split("\\{|\\}");
+                mSelectedDate = select.toString();
+                String string[] = mSelectedDate.split("\\{|\\}");
                 String s = string[1]; //2017-8-14
                 String string1[] = s.split("-");
                 int tempMonth = Integer.parseInt(string1[1]);
                 String month = Integer.toString(tempMonth + 1);
-                date3 = string1[0] + "-" + month + "-" + string1[2];
+                mDate3 = string1[0] + "-" + month + "-" + string1[2];
             }
         });
     }
@@ -598,7 +593,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void openSystemCamera() {
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
         requestPermission();
         startActivityForResult(intent, CameraUtils.TAKE_PHOTO);
     }
@@ -630,7 +625,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 .subscribe(new Action1<ProfileEdited>() {
                     @Override
                     public void call(ProfileEdited profileEdited) {
-                        UserInfo.userAvatarUrl = userAvatarUrl;
+                        UserInfo.userAvatarUrl = mUserAvatarUrl;
                     }
                 });
     }
@@ -642,15 +637,15 @@ public class EditProfileActivity extends AppCompatActivity {
             switch (id) {
                 //from album
                 case R.id.alert_from_album:
-                    alertDialog.dismiss();
-                    imageUri = CameraUtils.getImageUri(EditProfileActivity.this);
+                    mAlertDialog.dismiss();
+                    mImageUri = CameraUtils.getImageUri(EditProfileActivity.this);
                     openSystemAlbum();
                     break;
 
                 //from camera
                 case R.id.alert_from_camera:
-                    alertDialog.dismiss();
-                    imageUri = CameraUtils.getImageUri(EditProfileActivity.this);
+                    mAlertDialog.dismiss();
+                    mImageUri = CameraUtils.getImageUri(EditProfileActivity.this);
                     openSystemCamera();
                     break;
             }
@@ -662,51 +657,51 @@ public class EditProfileActivity extends AppCompatActivity {
             int id = compoundButton.getId();
             switch (id){
                 case R.id.group_android:
-                    if (rBtnAndroid.isChecked()) {
-                        rBtnBackEnd.setChecked(false);
-                        rBtnFrontEnd.setChecked(false);
-                        rBtnProduct.setChecked(false);
-                        rBtnDesign.setChecked(false);
+                    if (mRbtnAndroid.isChecked()) {
+                        mRbtnBackEnd.setChecked(false);
+                        mRbtnFrontEnd.setChecked(false);
+                        mRbtnProduct.setChecked(false);
+                        mRbtnDesign.setChecked(false);
                     }
                     UserInfo.userGroup = "安卓组";
                     ToastUtils.showSpecificDuration("选择组别安卓组", 2000);
                     break;
                 case R.id.group_frontend:
-                    if (rBtnFrontEnd.isChecked()) {
-                        rBtnBackEnd.setChecked(false);
-                        rBtnAndroid.setChecked(false);
-                        rBtnProduct.setChecked(false);
-                        rBtnDesign.setChecked(false);
+                    if (mRbtnFrontEnd.isChecked()) {
+                        mRbtnBackEnd.setChecked(false);
+                        mRbtnAndroid.setChecked(false);
+                        mRbtnProduct.setChecked(false);
+                        mRbtnDesign.setChecked(false);
                     }
                     UserInfo.userGroup = "前端组";
                     ToastUtils.showSpecificDuration("选择组别前端组", 2000);
                     break;
                 case R.id.group_backend:
-                    if (rBtnBackEnd.isChecked()) {
-                        rBtnAndroid.setChecked(false);
-                        rBtnProduct.setChecked(false);
-                        rBtnDesign.setChecked(false);
-                        rBtnFrontEnd.setChecked(false);
+                    if (mRbtnBackEnd.isChecked()) {
+                        mRbtnAndroid.setChecked(false);
+                        mRbtnProduct.setChecked(false);
+                        mRbtnDesign.setChecked(false);
+                        mRbtnFrontEnd.setChecked(false);
                     }
                     UserInfo.userGroup = "后台组";
                     ToastUtils.showSpecificDuration("选择组别后台组", 2000);
                     break;
                 case R.id.group_product:
-                    if (rBtnProduct.isChecked()) {
-                        rBtnAndroid.setChecked(false);
-                        rBtnBackEnd.setChecked(false);
-                        rBtnDesign.setChecked(false);
-                        rBtnFrontEnd.setChecked(false);
+                    if (mRbtnProduct.isChecked()) {
+                        mRbtnAndroid.setChecked(false);
+                        mRbtnBackEnd.setChecked(false);
+                        mRbtnDesign.setChecked(false);
+                        mRbtnFrontEnd.setChecked(false);
                     }
                     UserInfo.userGroup = "产品组";
                     ToastUtils.showSpecificDuration("选择组别产品组", 2000);
                     break;
                 case R.id.group_design:
-                    if (rBtnDesign.isChecked()) {
-                        rBtnAndroid.setChecked(false);
-                        rBtnBackEnd.setChecked(false);
-                        rBtnProduct.setChecked(false);
-                        rBtnFrontEnd.setChecked(false);
+                    if (mRbtnDesign.isChecked()) {
+                        mRbtnAndroid.setChecked(false);
+                        mRbtnBackEnd.setChecked(false);
+                        mRbtnProduct.setChecked(false);
+                        mRbtnFrontEnd.setChecked(false);
                     }
                     UserInfo.userGroup = "设计组";
                     ToastUtils.showSpecificDuration("选择组别设计组", 2000);

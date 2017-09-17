@@ -39,33 +39,33 @@ import static android.view.KeyEvent.KEYCODE_BACK;
 public class AddShareActivity extends SwipeBackActivity {
 
     //shareId :retrieved from editing this share
-    private int shareId;
-    private String shareTag;
-    private String shareTitle;
-    private String shareContent;
+    private int mShareId;
+    private String mShareTag;
+    private String mShareTitle;
+    private String mShareContent;
     //if the intent is to edit the share, the flage will be set true
-    private boolean editFlag = false;
+    private boolean mEditFlag = false;
 
 
-    private String titleAddedSharing = "";
-    private String shareAddedSharing = "";
-    private String tagsAddedSharing = "product";
+    private String mTitleAddedSharing = "";
+    private String mShareAddedSharing = "";
+    private String mTagsAddedSharing = "product";
 
-    private String rawShare;
-    private ShareList.SharesBean rawShareObject;
+    private String mRawShare;
+    private ShareList.SharesBean mRawShareObject;
 
     //@BindView(R.id.btn_add_sharing_back)
     //ImageButton btnAddSharingBack;
     @BindView(R.id.toolbar_add_sharing)
-    Toolbar toolbarAddSharing;
+    Toolbar mToolbarAddSharing;
     @BindView(R.id.tab_layout)
-    TabLayout tabLayout;
+    TabLayout mTabLayout;
     @BindView(R.id.txv_add_sharing_theme)
-    MaterialEditText txvAddSharingTheme;
+    MaterialEditText mTxvAddSharingTheme;
     @BindView(R.id.edt_add_sharing_link)
-    EditText edtAddSharingLink;
+    EditText mEdtAddSharingLink;
     @BindView(R.id.btn_add_sharing_confirm)
-    Button btnAddSharingConfirm;
+    Button mBtnAddSharingConfirm;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -108,51 +108,51 @@ public class AddShareActivity extends SwipeBackActivity {
 
     private void setExtras(){
         Intent intent = getIntent();
-        editFlag = intent.getBooleanExtra("editFlag",false);
-        if(editFlag) {
-            rawShareObject = (ShareList.SharesBean) intent.getExtras().getSerializable("rawShare");
+        mEditFlag = intent.getBooleanExtra("editFlag",false);
+        if(mEditFlag) {
+            mRawShareObject = (ShareList.SharesBean) intent.getExtras().getSerializable("rawShare");
 
-            shareId = intent.getIntExtra("shareId", -1);
-            shareTag = intent.getStringExtra("shareTag");
-            shareTitle = intent.getStringExtra("mShareTitleTxt");
-            shareContent = intent.getStringExtra("shareContent");
+            mShareId = intent.getIntExtra("shareId", -1);
+            mShareTag = intent.getStringExtra("shareTag");
+            mShareTitle = intent.getStringExtra("mShareTitleTxt");
+            mShareContent = intent.getStringExtra("shareContent");
 
-            setDefaultTab(shareTag);
-            titleAddedSharing = shareTitle;
-            shareAddedSharing = shareContent;
+            setDefaultTab(mShareTag);
+            mTitleAddedSharing = mShareTitle;
+            mShareAddedSharing = mShareContent;
 
-            txvAddSharingTheme.setText(shareTitle);
-            edtAddSharingLink.setText(shareContent);
+            mTxvAddSharingTheme.setText(mShareTitle);
+            mEdtAddSharingLink.setText(mShareContent);
         }
     }
     //set a tab when editFlag set true
     private void setDefaultTab(String tag){
         if(tag.equals("PRODUCT")){
-            tabLayout.getTabAt(0).select();
+            mTabLayout.getTabAt(0).select();
         }
         if(tag.equals("DESIGN")){
-            tabLayout.getTabAt(1).select();
+            mTabLayout.getTabAt(1).select();
         }
         if(tag.equals("ANDROID")){
-            tabLayout.getTabAt(2).select();
+            mTabLayout.getTabAt(2).select();
         }
         if(tag.equals("FRONTEND")){
-            tabLayout.getTabAt(3).select();
+            mTabLayout.getTabAt(3).select();
         }
         if(tag.equals("BACKEND")){
-            tabLayout.getTabAt(4).select();
+            mTabLayout.getTabAt(4).select();
         }
     }
     private void initToolbar() {
-        toolbarAddSharing.setTitleTextColor(getResources().getColor(R.color.colorWhite));
-        if (editFlag){
-            toolbarAddSharing.setTitle("编辑分享");
+        mToolbarAddSharing.setTitleTextColor(getResources().getColor(R.color.colorWhite));
+        if (mEditFlag){
+            mToolbarAddSharing.setTitle("编辑分享");
         }else {
-            toolbarAddSharing.setTitle("新建分享");
+            mToolbarAddSharing.setTitle("新建分享");
         }
-        toolbarAddSharing.setTitleMarginStart(40);
-        toolbarAddSharing.setTitleMarginTop(20);
-        setSupportActionBar(toolbarAddSharing);
+        mToolbarAddSharing.setTitleMarginStart(40);
+        mToolbarAddSharing.setTitleMarginTop(20);
+        setSupportActionBar(mToolbarAddSharing);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     //make sure the textView can set text when this activity comes to back ground
@@ -164,15 +164,15 @@ public class AddShareActivity extends SwipeBackActivity {
         if(!TextUtils.isEmpty(data)) {
             if ("text/plain".equals(type)) {
                 //give data to rawShare
-                rawShare = data;
+                mRawShare = data;
 
-                String parsedStrings[] = MyTextUtils.getDataFromOtherApp(rawShare);
+                String parsedStrings[] = MyTextUtils.getDataFromOtherApp(mRawShare);
 
-                titleAddedSharing = parsedStrings[0];
-                shareAddedSharing = parsedStrings[1];
+                mTitleAddedSharing = parsedStrings[0];
+                mShareAddedSharing = parsedStrings[1];
 
-                txvAddSharingTheme.setText(parsedStrings[0]);
-                edtAddSharingLink.setText(parsedStrings[1]);
+                mTxvAddSharingTheme.setText(parsedStrings[0]);
+                mEdtAddSharingLink.setText(parsedStrings[1]);
                 ToastUtils.makeToast(this, data, Toast.LENGTH_SHORT);
             } else if (type.startsWith("image/")) {
                 // here stays question
@@ -197,30 +197,30 @@ public class AddShareActivity extends SwipeBackActivity {
         return flag;
     }
     private void setupTabs() {
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.product));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.design));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.android));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.frontend));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.backend));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.product));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.design));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.android));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.frontend));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.backend));
     }
     private void setTabListener() {
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                if(tabLayout.getSelectedTabPosition() == 0){
-                    tagsAddedSharing = "product";
+                if(mTabLayout.getSelectedTabPosition() == 0){
+                    mTagsAddedSharing = "product";
                     ToastUtils.makeToast(AddShareActivity.this, "Product " , Toast.LENGTH_SHORT);
-                }else if(tabLayout.getSelectedTabPosition() == 1){
-                    tagsAddedSharing = "design";
+                }else if(mTabLayout.getSelectedTabPosition() == 1){
+                    mTagsAddedSharing = "design";
                     ToastUtils.makeToast(AddShareActivity.this, "Design " , Toast.LENGTH_SHORT);
-                }else if(tabLayout.getSelectedTabPosition() == 2){
-                    tagsAddedSharing = "android";
+                }else if(mTabLayout.getSelectedTabPosition() == 2){
+                    mTagsAddedSharing = "android";
                     ToastUtils.makeToast(AddShareActivity.this, "Android " , Toast.LENGTH_SHORT);
-                }else if(tabLayout.getSelectedTabPosition() == 3){
-                    tagsAddedSharing = "frontend";
+                }else if(mTabLayout.getSelectedTabPosition() == 3){
+                    mTagsAddedSharing = "frontend";
                     ToastUtils.makeToast(AddShareActivity.this, "Frontend " , Toast.LENGTH_SHORT);
-                }else if(tabLayout.getSelectedTabPosition() == 4){
-                    tagsAddedSharing = "backend";
+                }else if(mTabLayout.getSelectedTabPosition() == 4){
+                    mTagsAddedSharing = "backend";
                     ToastUtils.makeToast(AddShareActivity.this, "Backend " , Toast.LENGTH_SHORT);
                 }
 
@@ -238,18 +238,18 @@ public class AddShareActivity extends SwipeBackActivity {
         });
     }
     private void getData() {
-        titleAddedSharing = txvAddSharingTheme.getText().toString();
-        shareAddedSharing = edtAddSharingLink.getText().toString();
+        mTitleAddedSharing = mTxvAddSharingTheme.getText().toString();
+        mShareAddedSharing = mEdtAddSharingLink.getText().toString();
     }
     @OnClick({R.id.btn_add_sharing_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_add_sharing_confirm:
                 //return true all are not ""
-                titleAddedSharing = txvAddSharingTheme.getText().toString();
-                shareAddedSharing = edtAddSharingLink.getText().toString();
-                if(checkShareMessage(titleAddedSharing,shareAddedSharing,tagsAddedSharing)) {
-                    if(!editFlag){
+                mTitleAddedSharing = mTxvAddSharingTheme.getText().toString();
+                mShareAddedSharing = mEdtAddSharingLink.getText().toString();
+                if(checkShareMessage(mTitleAddedSharing, mShareAddedSharing, mTagsAddedSharing)) {
+                    if(!mEditFlag){
                         postAddedSharing();
                     }else{
                         editShare();
@@ -261,7 +261,7 @@ public class AddShareActivity extends SwipeBackActivity {
     }
 
     public void postAddedSharing() {
-        AddShare addShare = new AddShare(titleAddedSharing, shareAddedSharing, tagsAddedSharing);
+        AddShare addShare = new AddShare(mTitleAddedSharing, mShareAddedSharing, mTagsAddedSharing);
         MuxiFactory.getIRetrofit(BaseUrls.BASE_URL_SHARE)
                 .postShareAdd(UserInfo.shareToken,addShare)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -276,12 +276,12 @@ public class AddShareActivity extends SwipeBackActivity {
     }
 
     public void editShare(){
-        String content = edtAddSharingLink.getText().toString();
-        String title = txvAddSharingTheme.getText().toString();
+        String content = mEdtAddSharingLink.getText().toString();
+        String title = mTxvAddSharingTheme.getText().toString();
 
         EditShare editShare = new EditShare(content,title);
         MuxiFactory.getIRetrofit(BaseUrls.BASE_URL_SHARE)
-                .putEditShare(UserInfo.shareToken,editShare,shareId)
+                .putEditShare(UserInfo.shareToken,editShare,mShareId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Action1<AfterEditShare>() {

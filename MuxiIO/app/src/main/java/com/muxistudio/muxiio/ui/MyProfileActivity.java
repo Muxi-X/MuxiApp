@@ -42,47 +42,46 @@ import static com.muxistudio.muxiio.model.UserInfo.username;
 
 public class MyProfileActivity extends SwipeBackActivity{
 
-    private RecyclerView recyclerView;
-    private List<ShareList.SharesBean> sharesBeanList = new ArrayList<>();
-    private OneShareAdapter oneShareAdapter;
-    //@BindView(R.id.btn_profile_back)
-    //ImageButton btnProfileBack;
+    private RecyclerView mRecyclerView;
+    private List<ShareList.SharesBean> mSharesBeanList = new ArrayList<>();
+    private OneShareAdapter mOneShareAdapter;
+
     @BindView(R.id.uploading_hint)
-    RelativeLayout upLoadingLayout;
+    RelativeLayout mUpLoadingLayout;
     @BindView(R.id.btn_profile_edit)
-    ImageButton btnProfileEdit;
+    ImageButton mBtnProfileEdit;
     @BindView(R.id.toolbar_profile)
-    Toolbar toolbarProfile;
+    Toolbar mToolbarProfile;
     @BindView(R.id.imv_profile_photo)
-    CircleImageView imvProfilePhoto;
+    CircleImageView mImvProfilePhoto;
     @BindView(R.id.txv_profile_name)
-    TextView txvProfileName;
+    TextView mTxvProfileName;
     @BindView(R.id.txv_profile_email)
-    TextView txvProfileEmail;
+    TextView mTxvProfileEmail;
     @BindView(R.id.btn_profile_weibo)
-    ImageButton btnProfileWeibo;
+    ImageButton mBtnProfileWeibo;
     @BindView(R.id.btn_profile_zhihu)
-    ImageButton btnProfileZhihu;
+    ImageButton mBtnProfileZhihu;
     @BindView(R.id.btn_profile_github)
-    ImageButton btnProfileGithub;
+    ImageButton mBtnProfileGithub;
     @BindView(R.id.txv_profile_group)
-    TextView txvProfileGroup;
+    TextView mTxvProfileGroup;
     @BindView(R.id.txv_profile_birthday)
-    TextView txvProfileBirthday;
+    TextView mTxvProfileBirthday;
     @BindView(R.id.txv_profile_home)
-    TextView txvProfileHome;
+    TextView mTxvProfileHome;
     @BindView(R.id.txv_profile_introduction)
-    TextView txvProfileIntroduction;
+    TextView mTxvProfileIntroduction;
     @BindView(R.id.txv_profile_my_sharing)
-    TextView txvProfileMySharing;
+    TextView mTxvProfileMySharing;
     @BindView(R.id.txv_profile_blog)
-    TextView txvProfileBlog;
+    TextView mTxvProfileBlog;
     @BindView(R.id.txv_profile_start_time)
-    TextView txvProfileStartTime;
+    TextView mTxvProfileStartTime;
     @BindView(R.id.txv_profile_end_time)
-    TextView txvProfileEndTime;
+    TextView mTxvProfileEndTime;
     @BindView(R.id.txv_profile_duty)
-    TextView txvProfileDuty;
+    TextView mTxvProfileDuty;
 
 
     @Override
@@ -109,16 +108,16 @@ public class MyProfileActivity extends SwipeBackActivity{
 
     private void initTextViews(){
         //init email and blog
-        txvProfileBlog.setTextColor(getResources().getColor(R.color.colorGreen));
-        txvProfileBlog.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        txvProfileEmail.setTextColor(getResources().getColor(R.color.colorGreen));
-        txvProfileEmail.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        upLoadingLayout.setVisibility(View.VISIBLE);
+        mTxvProfileBlog.setTextColor(getResources().getColor(R.color.colorGreen));
+        mTxvProfileBlog.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mTxvProfileEmail.setTextColor(getResources().getColor(R.color.colorGreen));
+        mTxvProfileEmail.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mUpLoadingLayout.setVisibility(View.VISIBLE);
     }
     public void initToolbar() {
-        toolbarProfile.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-        toolbarProfile.setTitle("");
-        setSupportActionBar(toolbarProfile);
+        mToolbarProfile.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
+        mToolbarProfile.setTitle("");
+        setSupportActionBar(mToolbarProfile);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -161,25 +160,25 @@ public class MyProfileActivity extends SwipeBackActivity{
     }
     private void initView(){
         if (!"".equals(UserInfo.userWeibo) && UserInfo.userWeibo != null) {
-            btnProfileWeibo.setAlpha(1f);
+            mBtnProfileWeibo.setAlpha(1f);
         }
         if (!"".equals(UserInfo.userZhihu) && UserInfo.userZhihu != null) {
-            btnProfileZhihu.setAlpha(1f);
+            mBtnProfileZhihu.setAlpha(1f);
         }
         if (!"".equals(UserInfo.userGithub) && UserInfo.userGithub != null) {
-            btnProfileGithub.setAlpha(1f);
+            mBtnProfileGithub.setAlpha(1f);
         }
-        NetworkUtils.initPicture(MyProfileActivity.this, UserInfo.userAvatarUrl, imvProfilePhoto, upLoadingLayout);
-        txvProfileName.setText(username);
-        txvProfileBlog.setText(UserInfo.userPersonalBlog);
-        txvProfileEmail.setText(UserInfo.userEmail);
-        txvProfileGroup.setText(UserInfo.userGroup);
-        txvProfileBirthday.setText(UserInfo.userBirthday);
-        txvProfileHome.setText(UserInfo.userHometown);
-        txvProfileIntroduction.setText(UserInfo.userInfo);
-        txvProfileStartTime.setText(UserInfo.userTimeJoin);
-        txvProfileEndTime.setText(UserInfo.userTimeLeft);
-        txvProfileDuty.setText(UserInfo.userFlickr);
+        NetworkUtils.initPicture(MyProfileActivity.this, UserInfo.userAvatarUrl, mImvProfilePhoto, mUpLoadingLayout);
+        mTxvProfileName.setText(username);
+        mTxvProfileBlog.setText(UserInfo.userPersonalBlog);
+        mTxvProfileEmail.setText(UserInfo.userEmail);
+        mTxvProfileGroup.setText(UserInfo.userGroup);
+        mTxvProfileBirthday.setText(UserInfo.userBirthday);
+        mTxvProfileHome.setText(UserInfo.userHometown);
+        mTxvProfileIntroduction.setText(UserInfo.userInfo);
+        mTxvProfileStartTime.setText(UserInfo.userTimeJoin);
+        mTxvProfileEndTime.setText(UserInfo.userTimeLeft);
+        mTxvProfileDuty.setText(UserInfo.userFlickr);
     }
 
     @OnClick({R.id.txv_profile_blog, R.id.btn_profile_edit,
@@ -233,12 +232,12 @@ public class MyProfileActivity extends SwipeBackActivity{
     }
 
     private void initRecycleView() {
-        recyclerView = (RecyclerView) findViewById(R.id.rv_alone);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_alone);
         getOneShareList();
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        oneShareAdapter = new OneShareAdapter(MyProfileActivity.this, R.layout.item_one_share, sharesBeanList);
-        recyclerView.setAdapter(oneShareAdapter);
+        mRecyclerView.setLayoutManager(manager);
+        mOneShareAdapter = new OneShareAdapter(MyProfileActivity.this, R.layout.item_one_share, mSharesBeanList);
+        mRecyclerView.setAdapter(mOneShareAdapter);
     }
 
     private void getOneShareList() {
@@ -259,9 +258,9 @@ public class MyProfileActivity extends SwipeBackActivity{
                         int size = list.size();
                         for (int i = size - 1; i >= 0; i--) {
                             ShareList.SharesBean bean = list.get(i);
-                            sharesBeanList.add(bean);
+                            mSharesBeanList.add(bean);
                         }
-                        oneShareAdapter.notifyDataSetChanged();
+                        mOneShareAdapter.notifyDataSetChanged();
                     }
                 });
     }
