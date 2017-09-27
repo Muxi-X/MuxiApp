@@ -51,6 +51,8 @@ public class CacheUtils {
     }
     public static Bitmap readBitmapCache(String key){
         Bitmap bitmap = acache.getAsBitmap(key);
+        if(bitmap==null)
+            return null;
         return bitmap;
     }
     public static void removeBitmapCache(String key,Bitmap bitmap){

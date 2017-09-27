@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -84,33 +83,11 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final  int PERMISSION_GRANTED = 200;
     //pick up from photo
     private Uri imageUri;
-
     private AlertDialog alertDialog;
 
-    //count down
-    private int countDownTime = 10;
     //users always hope the uploading progress will be ended  less than  10 secs
     //in another word, the isCanceled flag is set true b
     private boolean isCanceled = true;
-    private CountDownTimer timer = new CountDownTimer(1000,10000) {
-        @Override
-        public void onTick(long l) {
-            countDownTime--;
-        }
-
-        //the callback will be fired alse when cancel() is called
-        @Override
-        public void onFinish() {
-            countDownTime = 10;
-            if (!isCanceled) {
-                ToastUtils.showSpecificDuration("哎呀呀,头像体积太大了,上传超时了", 2000);
-            }
-            //set isCanceled flag to true
-            isCanceled = true;
-        }
-    };
-
-
     /**
      * UI
      */
@@ -364,7 +341,7 @@ public class EditProfileActivity extends AppCompatActivity {
             final int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case CameraUtils.TAKE_PHOTO:
-                if (resultCode == RESULT_OK) {
+                if (resultCode == RESULT_OK&&isGranted) {
                     try {
                         CameraUtils.display(EditProfileActivity.this
                                 , imageUri, imvEditProfilePhoto);
@@ -375,29 +352,22 @@ public class EditProfileActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
                 break;
             case CameraUtils.OPEN_ALBUM:
                 if (resultCode != RESULT_CANCELED) {
                     if (resultCode != RESULT_CANCELED&&isGranted) {
+                        try {
                         upLoadingProgress.setVisibility(View.VISIBLE);
                         String imagePath = CameraUtils.handlImageOnKitKat(EditProfileActivity.this,
                                 data);
                         CameraUtils.display(imagePath, imvEditProfilePhoto);
                         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
                         File file = null;
-                        try {
-                            file = createCompressedBitmapFile(getFileSize(imagePath), bitmap);
-                        } catch (IOException e) {
+                        file = createCompressedBitmapFile(getFileSize(imagePath), bitmap);
+                        upLoadPic(file);
+                        }catch (Exception e){
                             e.printStackTrace();
                         }
-
-                        try {
-                            upLoadPic(file);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        timer.start();
                         break;
                     }
                 }
@@ -412,6 +382,8 @@ public class EditProfileActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE},
                     PERMISSION_GRANTED);
+        }else{
+            isGranted = true;
         }
     }
     public void pickAddress() {
@@ -566,34 +538,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                 }, null);
 
-
-        /*
-        RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part imageBodyPart = MultipartBody.Part.createFormData("file", file.getName(), imageBody);
-        MuxiFactory.getIRetrofit(BaseUrls.BASE_URL_AUTH)
-                .postUpLoadPic(imageBodyPart)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Action1<UpLoadResponse>() {
-                    @Override
-                    public void call(UpLoadResponse upLoadResponse) {
-                        //if connection not time out
-                        timer.cancel();
-                        isCanceled = true;
-                        countDownTime = 10;
-                        rlEditProfileUploading.setVisibility(View.GONE);
-                        upLoadingProgress.setVisibility(View.GONE);
-                        ToastUtils.showSpecificDuration("上传头像成功", 2000);
-                        userAvatarUrl = "http://share.muxixyz.com"  +
-                               upLoadResponse.getFilename();
-                        try {
-                            CameraUtils.display(EditProfileActivity.this, imageUri, imvEditProfilePhoto);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-                */
     }
 
     private void openSystemCamera() {

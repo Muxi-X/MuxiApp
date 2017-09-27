@@ -91,7 +91,6 @@ public class NetworkUtils {
                             CacheUtils.storeBitmapCache(CacheUtils.BITMAP_KEY,imageView.getDrawingCache());
                             upLoadingHints.setVisibility(View.GONE);
                         }
-
                         @Override
                         public void onError() {
                             upLoadingHints.setVisibility(View.GONE);

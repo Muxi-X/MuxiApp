@@ -67,7 +67,7 @@ public interface IRetrofit {
     @GET("./")
     Observable<ShareList> getShareBySort(@Query("page")int page,
                                     @Query("sort")String sort);
-    //get share by page (get all shares)
+    //get share by  (get all shares)
     @GET("all/")
     Observable<ShareList> getShareByPage(@Query("page")int page);
 
@@ -127,6 +127,7 @@ public interface IRetrofit {
     //get return all shares about a user
     @GET("get_one_all/{id}")
     Call<ShareList> getOneAllShare(@Path("id") int id);
+
    @GET("get_one_all/{id}")
    Observable<ShareList> getUserAllShare(@Path("id") int id);
 

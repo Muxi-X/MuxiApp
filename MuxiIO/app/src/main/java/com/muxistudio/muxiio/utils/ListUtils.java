@@ -17,6 +17,8 @@ public class ListUtils {
     public static boolean equals(List<ShareList.SharesBean> list1, List<ShareList.SharesBean>list2){
         int size1 = list1.size();
         int size2 = list2.size();
+        if(size1!=size2)
+            return false;
         for(int i=0;i<size1&&i<size2;i++){
             if(list1.get(i).getId()!=list2.get(i).getId()){
                 return false;

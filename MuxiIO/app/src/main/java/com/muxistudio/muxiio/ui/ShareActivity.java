@@ -310,7 +310,7 @@ public class ShareActivity extends AppCompatActivity
         }
         INSTANCE = this;
         ButterKnife.bind(this);
-        loadingView.setVisibility(View.VISIBLE);
+      //`  loadingView.setVisibility(View.VISIBLE);
         mUserNameTxt.setText(PreferenceUtils.readString(R.string.userName));
         mUserAvatarImg.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
     }
@@ -365,10 +365,9 @@ public class ShareActivity extends AppCompatActivity
            // loadingView.setVisibility(View.GONE);
             return;
         }
-        CacheUtils.readListCache(CacheUtils.SHARE_TEMPLIST_KEY,20);
+        templist = CacheUtils.readListCache(CacheUtils.SHARE_TEMPLIST_KEY,20);
         if(ListUtils.equals(shareBeanList,list)&&!templist.isEmpty()){
             ToastUtils.showShort("没有最新的分享了");
-
         }else {
             if (sort.equals("") || sort.equals("all")) {
                 CacheUtils.clearItems(CacheUtils.SHARE_LIST_KEY, shareBeanList);
@@ -541,7 +540,7 @@ public class ShareActivity extends AppCompatActivity
          iRetrofit.postShareRegister(info)
                  .subscribeOn(Schedulers.io())
                  .observeOn(Schedulers.io())
-                .flatMap(new Func1<Response<CreateId>, Observable<Token>>() {
+                 .flatMap(new Func1<Response<CreateId>, Observable<Token>>() {
                     @Override
                     public Observable<Token> call(Response<CreateId> createIdResponse) {
                         int code = createIdResponse.code();
@@ -555,14 +554,15 @@ public class ShareActivity extends AppCompatActivity
                 })
                  .subscribeOn(Schedulers.io())
                  .observeOn(AndroidSchedulers.mainThread())
-                 .subscribe(new Subscriber<Token>() {
+                 .subscribe(
+                         new Subscriber<Token>() {
                      @Override
                      public void onCompleted() {
                      }
                      @Override
                      public void onError(Throwable e) {
+                         e.printStackTrace();
                      }
-
                      @Override
                      public void onNext(Token token) {
                          UserInfo.shareToken = token.getToken();
