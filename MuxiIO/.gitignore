@@ -7,7 +7,7 @@
 /build
 /captures
 .externalNativeBuild
-.LOG.swl
-.LOG.swn
-.LOG.swo
-.LOG.swp
+*.swl
+*.swn
+*.swo
+*.swp
