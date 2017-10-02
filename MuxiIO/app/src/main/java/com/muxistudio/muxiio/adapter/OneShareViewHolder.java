@@ -17,13 +17,13 @@ import butterknife.ButterKnife;
 public class OneShareViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.title_one_share)
-    TextView titleOneShare;
+    TextView mTitleOneShare;
     @BindView(R.id.date_one_share)
-    TextView dateOneShare;
+    TextView mDateOneShare;
     @BindView(R.id.time_one_share)
-    TextView timeOneShare;
+    TextView mTimeOneShare;
     @BindView(R.id.text_one_share)
-    TextView textOneShare;
+    TextView mTextOneShare;
 
     public OneShareViewHolder(View view, Context context){
         super(view);

@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 
 public class UserInfo {
     public static Bitmap userAvatarBitmap;
-
+    public static boolean isChangedAvatar = false;
     public static String shareToken;
     public static String authToken;
 
@@ -33,4 +33,5 @@ public class UserInfo {
 
     public static int sharePosition;
     public static boolean isOpenBroswer = false;
+
 }

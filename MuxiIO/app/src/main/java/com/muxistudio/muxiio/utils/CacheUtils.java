@@ -1,10 +1,13 @@
 package com.muxistudio.muxiio.utils;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import com.muxistudio.muxiio.App;
 import com.muxistudio.muxiio.model.ACache;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -14,7 +17,7 @@ import java.util.List;
  * Created by kolibreath on 17-9-9.
  */
 
-public class CacheUtils {
+public class    CacheUtils {
     //这个key是专门的储存share object的keyH
     public static final String SHARE_TEMPLIST_KEY = "MuxistudioTempList";
     public static final String SHARE_LIST_KEY = "MuxistudioShareList";
@@ -31,7 +34,7 @@ public class CacheUtils {
         }
         acache.clear();
     }
-    public static <T>void storeListCache(String key,List<T>list){
+    public static <T>void saveListCache(String key, List<T>list){
         for(int i=0;i<list.size();i++){
             acache.put(key+i, (Serializable) list.get(i));
         }
@@ -46,16 +49,27 @@ public class CacheUtils {
         }
         return list;
     }
-    public static void storeBitmapCache(String key,Bitmap bitmap){
+    public static void saveBitmapCache(String key, Bitmap bitmap){
         acache.put(key,bitmap);
     }
     public static Bitmap readBitmapCache(String key){
         Bitmap bitmap = acache.getAsBitmap(key);
         if(bitmap==null)
             return null;
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+        int options = 100;
+        while(outputStream.toByteArray().length/1024>32&&options>=50){
+            outputStream.reset();
+            bitmap.compress(Bitmap.CompressFormat.JPEG,options,outputStream);
+            options -= 10;
+        }
+        ByteArrayInputStream inputStream  = new ByteArrayInputStream
+                (outputStream.toByteArray());
+        bitmap = BitmapFactory.decodeStream(inputStream,null,null);
         return bitmap;
     }
-    public static void removeBitmapCache(String key,Bitmap bitmap){
+    public static void removeBitmapCache(String key){
         acache.remove(key);
     }
 }

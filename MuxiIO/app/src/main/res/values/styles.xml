@@ -8,9 +8,14 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionOverflowButtonStyle">@style/MyOverflowButtonStyle</item>
         <item name="android:itemTextAppearance">@style/MyActionBar.MenuTextStyle</item>
         <!--To change the background of options menu-->
         <item name="android:itemBackground">@color/colorWhite</item>
+    </style>
+
+    <style name="MyOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">#ffffff</item>
     </style>
 
     <style name="MyActionBar.MenuTextStyle"

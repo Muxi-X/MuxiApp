@@ -39,48 +39,48 @@ import rx.schedulers.Schedulers;
 
 public class OthersProfileActivity extends SwipeBackActivity {
 
-    private String othersProfileWeibo;
-    private String othersProfileZhihu;
-    private String othersProfileGithub;
-    private RecyclerView recyclerView;
-    private List<ShareList.SharesBean> oneShareList = new ArrayList<>();
-    private OneShareAdapter oneShareAdapter;
-    private int otherPeopleId = 0;
+    private String mOthersProfileWeibo;
+    private String mOthersProfileZhihu;
+    private String mOthersProfileGithub;
+    private RecyclerView mRecyclerView;
+    private List<ShareList.SharesBean> mOneShareList = new ArrayList<>();
+    private OneShareAdapter mOneShareAdapter;
+    private int mOtherPeopleId = 0;
 
     @BindView(R.id.uploading_hint)
-    RelativeLayout uploadingLayout;
+    RelativeLayout mUploadingLayout;
     @BindView(R.id.toolbar_others_profile)
-    Toolbar toolbarOthersProfile;
+    Toolbar mToolbarOthersProfile;
     @BindView(R.id.imv_others_profile_photo)
-    CircleImageView otherProfileImg;
+    CircleImageView mOtherProfileImg;
     @BindView(R.id.txv_others_profile_name)
-    TextView otherProfileNameTxt;
+    TextView mOtherProfileNameTxt;
     @BindView(R.id.txv_others_profile_blog)
-    TextView txvOthersProfileBlog;
+    TextView mTxvOthersProfileBlog;
     @BindView(R.id.txv_others_profile_email)
-    TextView otherProfileEmailTxt;
+    TextView mOtherProfileEmailTxt;
     @BindView(R.id.btn_others_profile_weibo)
-    ImageButton otherProfileWeiboBtn;
+    ImageButton mOtherProfileWeiboBtn;
     @BindView(R.id.btn_others_profile_zhihu)
-    ImageButton otherProfileZhihuBtn;
+    ImageButton mOtherProfileZhihuBtn;
     @BindView(R.id.btn_others_profile_github)
-    ImageButton otherProfileGithubBtn;
+    ImageButton mOtherProfileGithubBtn;
     @BindView(R.id.txv_others_profile_group)
-    TextView txvOthersProfileGroup;
+    TextView mTxvOthersProfileGroup;
     @BindView(R.id.txv_others_profile_start_time)
-    TextView txvOthersProfileStartTime;
+    TextView mTxvOthersProfileStartTime;
     @BindView(R.id.txv_others_profile_end_time)
-    TextView txvOthersProfileEndTime;
+    TextView mTxvOthersProfileEndTime;
     @BindView(R.id.txv_others_profile_duty)
-    TextView txvOthersProfileDuty;
+    TextView mTxvOthersProfileDuty;
     @BindView(R.id.txv_others_profile_birthday)
-    TextView txvOthersProfileBirthday;
+    TextView mTxvOthersProfileBirthday;
     @BindView(R.id.txv_others_profile_home)
-    TextView txvOthersProfileHome;
+    TextView mTxvOthersProfileHome;
     @BindView(R.id.txv_others_profile_introduction)
-    TextView txvOthersProfileIntroduction;
+    TextView mTxvOthersProfileIntroduction;
     @BindView(R.id.txv_profile_others_sharing)
-    TextView txvProfileOthersSharing;
+    TextView mTxvProfileOthersSharing;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,32 +103,32 @@ public class OthersProfileActivity extends SwipeBackActivity {
         initToolbar();
         initTextViews();
         initRecycleView();
-        uploadingLayout.setVisibility(View.VISIBLE);
+        mUploadingLayout.setVisibility(View.VISIBLE);
         getProfile();
         getOneShareList();
 
     }
     private void setExtras(){
         Intent intent = getIntent();
-        otherPeopleId = intent.getIntExtra("otherUserId",0);
+        mOtherPeopleId = intent.getIntExtra("otherUserId",0);
     }
     //设置文字的下划线等等
     private void initTextViews(){
-        txvOthersProfileBlog.setTextColor(getResources().getColor(R.color.colorGreen));
-        txvOthersProfileBlog.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        otherProfileEmailTxt.setTextColor(getResources().getColor(R.color.colorGreen));
-        otherProfileEmailTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mTxvOthersProfileBlog.setTextColor(getResources().getColor(R.color.colorGreen));
+        mTxvOthersProfileBlog.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        mOtherProfileEmailTxt.setTextColor(getResources().getColor(R.color.colorGreen));
+        mOtherProfileEmailTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
     public void initToolbar() {
-        toolbarOthersProfile.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
-        toolbarOthersProfile.setTitle("");
-        setSupportActionBar(toolbarOthersProfile);
+        mToolbarOthersProfile.setTitleTextColor(getResources().getColor(R.color.colorPrimary));
+        mToolbarOthersProfile.setTitle("");
+        setSupportActionBar(mToolbarOthersProfile);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     private void getOthersProfile() {
         MuxiFactory.getIRetrofit(BaseUrls.BASE_URL_AUTH)
-                .getUserProfile(UserInfo.authToken,otherPeopleId)
+                .getUserProfile(UserInfo.authToken, mOtherPeopleId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<UserProfile>() {
@@ -140,7 +140,7 @@ public class OthersProfileActivity extends SwipeBackActivity {
                     }
                     @Override
                     public void onNext(UserProfile userProfile) {
-                        uploadingLayout.setVisibility(View.GONE);
+                        mUploadingLayout.setVisibility(View.GONE);
                         UserProfile user  = userProfile;
                         initView(user);
                     }
@@ -148,31 +148,31 @@ public class OthersProfileActivity extends SwipeBackActivity {
     }
     private void initView(UserProfile userProfile) {
         if (!"".equals(userProfile.getWeibo()) && userProfile.getWeibo() != null) {
-            otherProfileWeiboBtn.setAlpha(1f);
+            mOtherProfileWeiboBtn.setAlpha(1f);
         }
         if (!"".equals(userProfile.getZhihu()) && userProfile.getZhihu() != null) {
-            otherProfileZhihuBtn.setAlpha(1f);
+            mOtherProfileZhihuBtn.setAlpha(1f);
         }
         if (!"".equals(userProfile.getGithub()) && userProfile.getGithub() != null) {
-            otherProfileGithubBtn.setAlpha(1f);
+            mOtherProfileGithubBtn.setAlpha(1f);
         }
         String url = userProfile.getAvatar_url();
         NetworkUtils.initPicture(OthersProfileActivity.this, userProfile.getAvatar_url()
-                , otherProfileImg,uploadingLayout);
-        otherProfileNameTxt.setText(userProfile.getUsername());
-        txvOthersProfileBlog.setText(userProfile.getPersonal_blog());
-        otherProfileEmailTxt.setText(userProfile.getEmail());
-        txvOthersProfileGroup.setText(userProfile.getGroup());
-        txvOthersProfileBirthday.setText(userProfile.getBirthday());
-        txvOthersProfileHome.setText(userProfile.getHometown());
-        txvOthersProfileIntroduction.setText(userProfile.getInfo());
-        txvOthersProfileStartTime.setText(userProfile.getTimejoin());
-        txvOthersProfileEndTime.setText(userProfile.getTimeleft());
-        txvOthersProfileDuty.setText(userProfile.getFlickr());
-        txvProfileOthersSharing.setText(userProfile.getUsername());
-        othersProfileWeibo = userProfile.getWeibo();
-        othersProfileGithub = userProfile.getGithub();
-        othersProfileZhihu = userProfile.getZhihu();
+                , mOtherProfileImg, mUploadingLayout);
+        mOtherProfileNameTxt.setText(userProfile.getUsername());
+        mTxvOthersProfileBlog.setText(userProfile.getPersonal_blog());
+        mOtherProfileEmailTxt.setText(userProfile.getEmail());
+        mTxvOthersProfileGroup.setText(userProfile.getGroup());
+        mTxvOthersProfileBirthday.setText(userProfile.getBirthday());
+        mTxvOthersProfileHome.setText(userProfile.getHometown());
+        mTxvOthersProfileIntroduction.setText(userProfile.getInfo());
+        mTxvOthersProfileStartTime.setText(userProfile.getTimejoin());
+        mTxvOthersProfileEndTime.setText(userProfile.getTimeleft());
+        mTxvOthersProfileDuty.setText(userProfile.getFlickr());
+        mTxvProfileOthersSharing.setText(userProfile.getUsername());
+        mOthersProfileWeibo = userProfile.getWeibo();
+        mOthersProfileGithub = userProfile.getGithub();
+        mOthersProfileZhihu = userProfile.getZhihu();
     }
     @OnClick({R.id.txv_others_profile_blog,
             R.id.txv_others_profile_email, R.id.btn_others_profile_weibo,
@@ -181,36 +181,36 @@ public class OthersProfileActivity extends SwipeBackActivity {
         switch (view.getId()) {
             case R.id.txv_others_profile_blog:
                 Intent intent1 = new Intent(Intent.ACTION_VIEW);
-                if (!MyTextUtils.errorLink( txvOthersProfileBlog.getText().toString())) {
-                    intent1.setData(Uri.parse(MyTextUtils.urlFormat(txvOthersProfileBlog.getText().toString())));
+                if (!MyTextUtils.errorLink(mTxvOthersProfileBlog.getText().toString())) {
+                    intent1.setData(Uri.parse(MyTextUtils.urlFormat(mTxvOthersProfileBlog.getText().toString())));
                     startActivity(intent1);
                 }
                 break;
             case R.id.txv_others_profile_email:
                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
-                if (!MyTextUtils.errorLink( otherProfileEmailTxt.getText().toString())) {
-                    intent2.setData(Uri.parse(MyTextUtils.urlFormat(otherProfileEmailTxt.getText().toString())));
+                if (!MyTextUtils.errorLink(mOtherProfileEmailTxt.getText().toString())) {
+                    intent2.setData(Uri.parse(MyTextUtils.urlFormat(mOtherProfileEmailTxt.getText().toString())));
                     startActivity(intent2);
                 }
                 break;
             case R.id.btn_others_profile_weibo:
                 Intent intent3 = new Intent(Intent.ACTION_VIEW);
-                if (!MyTextUtils.errorLink( othersProfileWeibo)) {
-                    intent3.setData(Uri.parse(MyTextUtils.urlFormat(othersProfileWeibo)));
+                if (!MyTextUtils.errorLink(mOthersProfileWeibo)) {
+                    intent3.setData(Uri.parse(MyTextUtils.urlFormat(mOthersProfileWeibo)));
                     startActivity(intent3);
                 }
                 break;
             case R.id.btn_others_profile_zhihu:
                 Intent intent4 = new Intent(Intent.ACTION_VIEW);
-                if (!MyTextUtils.errorLink( othersProfileZhihu)) {
-                    intent4.setData(Uri.parse(MyTextUtils.urlFormat(othersProfileZhihu)));
+                if (!MyTextUtils.errorLink(mOthersProfileZhihu)) {
+                    intent4.setData(Uri.parse(MyTextUtils.urlFormat(mOthersProfileZhihu)));
                     startActivity(intent4);
                 }
                 break;
             case R.id.btn_others_profile_github:
                 Intent intent5 = new Intent(Intent.ACTION_VIEW);
-                if (!MyTextUtils.errorLink(othersProfileGithub)) {
-                    intent5.setData(Uri.parse(MyTextUtils.urlFormat(othersProfileGithub)));
+                if (!MyTextUtils.errorLink(mOthersProfileGithub)) {
+                    intent5.setData(Uri.parse(MyTextUtils.urlFormat(mOthersProfileGithub)));
                     startActivity(intent5);
                 }
                 break;
@@ -218,7 +218,7 @@ public class OthersProfileActivity extends SwipeBackActivity {
     }
     private void getOneShareList() {
         MuxiFactory.getIRetrofit(BaseUrls.BASE_URL_SHARE)
-                .getUserAllShare(otherPeopleId)
+                .getUserAllShare(mOtherPeopleId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<ShareList>() {
@@ -233,19 +233,19 @@ public class OthersProfileActivity extends SwipeBackActivity {
                         List<ShareList.SharesBean> list = list1.getShares();
                         int size =list.size();
                         for (int i = size - 1;i >= 0; i--) {
-                            oneShareList.add(list.get(i));
+                            mOneShareList.add(list.get(i));
                         }
-                        oneShareAdapter.notifyDataSetChanged();
+                        mOneShareAdapter.notifyDataSetChanged();
                     }
                 });
     }
     private void initRecycleView() {
-        recyclerView = (RecyclerView) findViewById(R.id.rv_alone);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_alone);
        // oneShareList = getOneShareList();
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        oneShareAdapter = new OneShareAdapter(OthersProfileActivity.this, R.layout.item_one_share, oneShareList);
-        recyclerView.setAdapter(oneShareAdapter);
+        mRecyclerView.setLayoutManager(manager);
+        mOneShareAdapter = new OneShareAdapter(OthersProfileActivity.this, R.layout.item_one_share, mOneShareList);
+        mRecyclerView.setAdapter(mOneShareAdapter);
     }
     private void getProfile(){
         getOthersProfile();

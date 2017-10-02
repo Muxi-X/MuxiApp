@@ -12,7 +12,6 @@ import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.model.ShareList;
 import com.muxistudio.muxiio.model.UserShareInfo;
 import com.muxistudio.muxiio.net.BaseUrls;
-import com.muxistudio.muxiio.net.IRetrofit;
 import com.muxistudio.muxiio.net.MuxiFactory;
 import com.muxistudio.muxiio.utils.ToastUtils;
 
@@ -30,9 +29,6 @@ import lecho.lib.hellocharts.model.SubcolumnValue;
 import lecho.lib.hellocharts.util.ChartUtils;
 import lecho.lib.hellocharts.view.ColumnChartView;
 import me.yokeyword.swipebackfragment.SwipeBackActivity;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -42,12 +38,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class HiddenChartActivity extends SwipeBackActivity {
-
-    private Retrofit retrofit;
-    private HttpLoggingInterceptor interceptor;
-    private OkHttpClient client;
-    private IRetrofit iRetrofit;
-
 
     //memberIndex is the coordinate in X-axis; memberIndex will plus one to itself after add
     // a point value to list

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.net.BaseUrls;
 import com.muxistudio.muxiio.net.IRetrofit;
 import com.muxistudio.muxiio.utils.AlertDialogUtils;
+import com.muxistudio.muxiio.utils.CacheUtils;
 import com.muxistudio.muxiio.utils.CloseAppUtils;
 import com.muxistudio.muxiio.utils.MyTextUtils;
 import com.muxistudio.muxiio.utils.NetworkUtils;
@@ -129,18 +131,13 @@ public class MessageActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         CloseAppUtils.activityList.add(this);
-
         ButterKnife.bind(this);
-
-
+        ImageView test = (ImageView) findViewById(R.id.testimage);
+        test.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
         upLoadingProgress.setVisibility(View.VISIBLE);
-
         initRetrofit();
         initToolbar();
-
-        //net work
         getMessage();
-
         initListView();
 
     }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -302,7 +303,11 @@ public class ShareActivity extends AppCompatActivity
                 UserInfo.isOpenBroswer = false;
             }
             shareBeanList = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,SHARE_TOTAL);
-            mUserAvatarImg.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
+            //这个储存的方法暂时是失效的...
+            Bitmap temp = CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY);
+             mUserAvatarImg.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
+            NetworkUtils.initPicture(ShareActivity.this,UserInfo.userAvatarUrl,mUserAvatarImg,
+                    loadingView);
             adapter.setList(shareBeanList);
             adapter.notifyDataSetChanged();
         } catch (FileNotFoundException e) {
@@ -360,8 +365,8 @@ public class ShareActivity extends AppCompatActivity
             //Collections.sort(shareBeanList);
             adapter.setList(shareBeanList);
             adapter.notifyDataSetChanged();
-            CacheUtils.storeListCache(CacheUtils.SHARE_LIST_KEY,shareBeanList);
-            CacheUtils.storeListCache(CacheUtils.SHARE_TEMPLIST_KEY,templist);
+            CacheUtils.saveListCache(CacheUtils.SHARE_LIST_KEY,shareBeanList);
+            CacheUtils.saveListCache(CacheUtils.SHARE_TEMPLIST_KEY,templist);
            // loadingView.setVisibility(View.GONE);
             return;
         }
@@ -375,7 +380,7 @@ public class ShareActivity extends AppCompatActivity
                 ListUtils.add(list, templist);
               //  Collections.sort(shareBeanList);
                 adapter.setList(shareBeanList);
-                CacheUtils.storeListCache(CacheUtils.SHARE_LIST_KEY, shareBeanList);
+                CacheUtils.saveListCache(CacheUtils.SHARE_LIST_KEY, shareBeanList);
                 //loadingView.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }else{
@@ -534,6 +539,7 @@ public class ShareActivity extends AppCompatActivity
                 break;
         }
     }
+    //先尝试注册，如果成功注册或者已经注册完成，就登录
     private void shareAuth() {
         RegisterInfo info = new RegisterInfo(UserInfo.userEmail, username,UserInfo.userpwd);
         final IRetrofit iRetrofit = MuxiFactory.getIRetrofit(BaseUrls.BASE_URL_SHARE);
@@ -571,7 +577,6 @@ public class ShareActivity extends AppCompatActivity
                          initNavigationHeader();
                          NetworkUtils.initPicture(ShareActivity.this,
                                  UserInfo.userAvatarUrl, mUserAvatarImg, loadingView);
-                         CacheUtils.storeBitmapCache(CacheUtils.BITMAP_KEY,mUserAvatarImg.getDrawingCache());
                      }
                  });
     }
@@ -625,7 +630,6 @@ public class ShareActivity extends AppCompatActivity
                     }
                 });
     }
-
     class DeleteBroadCastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

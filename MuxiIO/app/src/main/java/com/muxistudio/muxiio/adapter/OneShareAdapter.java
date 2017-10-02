@@ -15,20 +15,20 @@ import java.util.List;
 
 public class OneShareAdapter extends RecyclerView.Adapter {
 
-    private List<ShareList.SharesBean> oneShareList = new ArrayList<>();
-    private Context context;
-    private int number;
+    private List<ShareList.SharesBean> mOneShareList = new ArrayList<>();
+    private Context mContext;
+    private int mNumber;
 
     public OneShareAdapter(Context context, int number, List<ShareList.SharesBean> list){
-        this.context = context;
-        this.number = number;
-        this.oneShareList = list;
+        this.mContext = context;
+        this.mNumber = number;
+        this.mOneShareList = list;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(number, parent, false);
-        OneShareViewHolder oneShareViewHolder = new OneShareViewHolder(view, context);
+        View view = LayoutInflater.from(mContext).inflate(mNumber, parent, false);
+        OneShareViewHolder oneShareViewHolder = new OneShareViewHolder(view, mContext);
         return oneShareViewHolder;
     }
 
@@ -36,17 +36,17 @@ public class OneShareAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        if (oneShareList.size() != 0) {
-            String title = oneShareList.get(position).getTitle();
+        if (mOneShareList.size() != 0) {
+            String title = mOneShareList.get(position).getTitle();
             if(MyTextUtils.length(title)>=18){
                 title = MyTextUtils.cutTitle(title,MyTextUtils.length(title)/2);
             }
-            ((OneShareViewHolder) holder).titleOneShare.setText(title);
+            ((OneShareViewHolder) holder).mTitleOneShare.setText(title);
             //eg: 03 Aug 2017
-            String parseTime1 = MyTextUtils.parseDate(oneShareList.get(position).getDate());
+            String parseTime1 = MyTextUtils.parseDate(mOneShareList.get(position).getDate());
             String parseTime2 = MyTextUtils.formatDateUsingSlash(parseTime1);
-            ((OneShareViewHolder) holder).dateOneShare.setText(parseTime2);
-            ((OneShareViewHolder) holder).textOneShare.setText(oneShareList.get(position).getShare());
+            ((OneShareViewHolder) holder).mDateOneShare.setText(parseTime2);
+            ((OneShareViewHolder) holder).mTextOneShare.setText(mOneShareList.get(position).getShare());
 
         }else{
             ToastUtils.showShort("NOTHING HERE");
@@ -55,17 +55,17 @@ public class OneShareAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return oneShareList.size();
+        return mOneShareList.size();
     }
 
     public void addItem(int position, ShareList.SharesBean bean){
-        oneShareList.add(position,bean);
+        mOneShareList.add(position,bean);
         notifyItemInserted(position);
 
     }
 
     public void removeItem(int position){
-        oneShareList.remove(position);
+        mOneShareList.remove(position);
         notifyItemRemoved(position);
     }
 

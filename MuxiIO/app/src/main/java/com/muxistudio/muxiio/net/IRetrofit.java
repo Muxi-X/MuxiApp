@@ -1,5 +1,6 @@
 package com.muxistudio.muxiio.net;
 
+import com.muxistudio.muxiio.data.UpLoadKey;
 import com.muxistudio.muxiio.model.AddComments;
 import com.muxistudio.muxiio.model.AddCommentsSuccessful;
 import com.muxistudio.muxiio.model.AddShare;
@@ -140,8 +141,9 @@ public interface IRetrofit {
     @GET("{id}/comments/")
     Call<Comments> getMessageComment(@Path("id")int id);
 
-
-
+    @POST("token-generate/")
+    Observable<Token> postRetrieveToken(@Header("token")String token,
+                                    @Body UpLoadKey key);
 
     /**
      * profile
