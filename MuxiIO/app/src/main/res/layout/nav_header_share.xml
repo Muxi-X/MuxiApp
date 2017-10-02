@@ -10,7 +10,7 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_margin="20dp"
-        android:id="@+id/share_useravatar"
+        android:id="@+id/share_user_avatar"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:paddingTop="10dp"

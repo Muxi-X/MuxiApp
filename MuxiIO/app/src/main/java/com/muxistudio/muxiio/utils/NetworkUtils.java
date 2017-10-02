@@ -1,10 +1,14 @@
 package com.muxistudio.muxiio.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.view.View;
@@ -16,8 +20,8 @@ import com.jakewharton.picasso.OkHttp3Downloader;
 import com.muxistudio.muxiio.App;
 import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.ui.ShareActivity;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.net.SocketException;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +37,6 @@ public class NetworkUtils {
     public static final int  WIFI_CONNECTED = 2;
     public static final int MOBILE_DATA_CONNECTED = 1;
     public static final int UNCONNECTED = 0;
-    public static ImageView tempView ;
     public static Context sContext = App.getContext();
     public static int getNetworkStatus(){
         ConnectivityManager manager = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -64,23 +67,18 @@ public class NetworkUtils {
         }
     }
 
-    //先会从缓存中读取bitmap 如果是null的话发送请求
-    //如果请求失败，使用默认icon
-    //为什么要使用这个奇怪的方法缓存Bitmap—>1.由于图片的原因，不一定都可以view.getDrawingCache()返回非空
-    //2.因此使用了一个private方法在canvas之中绘制bitmap
-    //3.由于CircleImageView的特殊性，上下没有对齐，所以Bitmap会有莫名其妙的黑色阴影，于是先缓存在一个无关的imageview
-    //中然后在setBitmap
     public static void initPicture(final Context context, String url
             , final ImageView imageView, final RelativeLayout upLoadingHints) {
         Bitmap bitmapCache = CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY);
         if(bitmapCache!=null){
             imageView.setImageBitmap(bitmapCache);
+            upLoadingHints.setVisibility(View.GONE);
         }else {
             int status = NetworkUtils.getNetworkStatus();
             if(status==NetworkUtils.UNCONNECTED){
                 NetworkUtils.makeToast(status);
                 upLoadingHints.setVisibility(View.GONE);
-                    return;
+                return;
             }
             Picasso picasso;
             OkHttpClient okHttpClient;
@@ -93,24 +91,30 @@ public class NetworkUtils {
                     .downloader(new OkHttp3Downloader(okHttpClient))
                     .build();
             if (context.getClass() == ShareActivity.class){
-                tempView = (ImageView) ((Activity) context).findViewById(R.id.testimage);
+
             }
             picasso.with(context).load(url)
-                    .into(tempView, new Callback() {
+                    .into(new Target() {
                         @Override
-                        public void onSuccess() {
-                            Bitmap temp = convertViewToBitmap(tempView);
-                            CacheUtils.saveBitmapCache(CacheUtils.BITMAP_KEY,temp);
+                        public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                            Bitmap temp = bitmap;
                             imageView.setImageBitmap(temp);
+                            CacheUtils.saveBitmapCache(CacheUtils.BITMAP_KEY,temp);
                             upLoadingHints.setVisibility(View.GONE);
                         }
+
                         @Override
-                        public void onError() {
+                        public void onBitmapFailed(Drawable errorDrawable) {
                             upLoadingHints.setVisibility(View.GONE);
                             Bitmap bitmap = BitmapFactory.decodeResource(App.getContext().getResources(),
                                     R.mipmap.muxiicon);
                             imageView.setImageBitmap(bitmap);
                             ToastUtils.showShort("头像加载失败，使用默认头像");
+                        }
+
+                        @Override
+                        public void onPrepareLoad(Drawable placeHolderDrawable) {
+
                         }
                     });
         }
@@ -121,12 +125,21 @@ public class NetworkUtils {
             ToastUtils.makeToast(context,"与服务器端丢失连接...",2000);
         }
     }
-
     private static Bitmap convertViewToBitmap(View view){
-        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(), Bitmap.Config.ARGB_4444);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         return bitmap;
+    }
+    private static void clipBitmapCirCle(Bitmap bitmap){
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.STROKE);
+        Canvas canvas = new Canvas(bitmap);
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+        int radius = bitmap.getWidth()>bitmap.getHeight()?bitmap.getHeight():bitmap.getHeight();
+        canvas.drawCircle(radius,radius,radius,paint);
     }
 
 }

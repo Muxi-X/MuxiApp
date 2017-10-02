@@ -134,7 +134,7 @@ public class ShareActivity extends AppCompatActivity
     TextView mUserNameTxt;
     NavigationView navigationView;
     private DrawerLayout drawer;
-    private CircleImageView mUserAvatarImg;
+    private ImageView mUserAvatarImg;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -304,6 +304,7 @@ public class ShareActivity extends AppCompatActivity
             }
             shareBeanList = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,SHARE_TOTAL);
             //这个储存的方法暂时是失效的...
+            ImageView fuck = mUserAvatarImg;
             Bitmap temp = CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY);
              mUserAvatarImg.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
             NetworkUtils.initPicture(ShareActivity.this,UserInfo.userAvatarUrl,mUserAvatarImg,
@@ -498,7 +499,7 @@ public class ShareActivity extends AppCompatActivity
     private void initNavigationHeader() {
         View view = navigationView.getHeaderView(0);
         mUserNameTxt = (TextView) view.findViewById(R.id.share_username);
-        mUserAvatarImg = (CircleImageView) view.findViewById(R.id.share_useravatar);
+        mUserAvatarImg = (CircleImageView) view.findViewById(R.id.share_user_avatar);
         mUserAvatarImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
