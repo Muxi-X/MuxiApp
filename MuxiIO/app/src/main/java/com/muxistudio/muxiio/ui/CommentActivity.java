@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.adapter.CommentAdapter;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.model.AddComments;
 import com.muxistudio.muxiio.model.AddCommentsSuccessful;
 import com.muxistudio.muxiio.model.Comments;
-import com.muxistudio.muxiio.model.ShareList;
 import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.net.BaseUrls;
 import com.muxistudio.muxiio.net.MuxiFactory;
@@ -116,7 +116,7 @@ public class CommentActivity extends SwipeBackActivity{
 
     private void getExtra(){
        // Bundle bundle = getIntent().getExtras();
-        ShareList.SharesBean bean = (ShareList.SharesBean) getIntent().getSerializableExtra("shareInfo");
+        SharesBean bean = (SharesBean) getIntent().getSerializableExtra("shareInfo");
         shareId = bean.getId();
         shareAvatarUrl = bean.getAvatar();
         shareUsername = bean.getUsername();

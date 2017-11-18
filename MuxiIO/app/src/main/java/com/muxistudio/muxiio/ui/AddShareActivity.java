@@ -14,10 +14,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.muxistudio.muxiio.R;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.model.AddShare;
 import com.muxistudio.muxiio.model.AfterEditShare;
 import com.muxistudio.muxiio.model.EditShare;
-import com.muxistudio.muxiio.model.ShareList;
 import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.net.BaseUrls;
 import com.muxistudio.muxiio.net.MuxiFactory;
@@ -52,7 +52,7 @@ public class AddShareActivity extends SwipeBackActivity {
     private String mTagsAddedSharing = "product";
 
     private String mRawShare;
-    private ShareList.SharesBean mRawShareObject;
+    public SharesBean mRawShareObject;
 
     //@BindView(R.id.btn_add_sharing_back)
     //ImageButton btnAddSharingBack;
@@ -110,7 +110,7 @@ public class AddShareActivity extends SwipeBackActivity {
         Intent intent = getIntent();
         mEditFlag = intent.getBooleanExtra("editFlag",false);
         if(mEditFlag) {
-            mRawShareObject = (ShareList.SharesBean) intent.getExtras().getSerializable("rawShare");
+            mRawShareObject = (SharesBean) intent.getExtras().getSerializable("rawShare");
 
             mShareId = intent.getIntExtra("shareId", -1);
             mShareTag = intent.getStringExtra("shareTag");

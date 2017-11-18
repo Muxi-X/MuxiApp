@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.muxistudio.muxiio.model.ShareList;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.utils.MyTextUtils;
 import com.muxistudio.muxiio.utils.ToastUtils;
 
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class OneShareAdapter extends RecyclerView.Adapter {
 
-    private List<ShareList.SharesBean> mOneShareList = new ArrayList<>();
+    private List<SharesBean> mOneShareList = new ArrayList<>();
     private Context mContext;
     private int mNumber;
 
-    public OneShareAdapter(Context context, int number, List<ShareList.SharesBean> list){
+    public OneShareAdapter(Context context, int number, List<SharesBean> list){
         this.mContext = context;
         this.mNumber = number;
         this.mOneShareList = list;
@@ -58,7 +58,7 @@ public class OneShareAdapter extends RecyclerView.Adapter {
         return mOneShareList.size();
     }
 
-    public void addItem(int position, ShareList.SharesBean bean){
+    public void addItem(int position, SharesBean bean){
         mOneShareList.add(position,bean);
         notifyItemInserted(position);
 

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'me.tatarka.retrolambda'
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
@@ -17,6 +17,10 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
@@ -54,6 +58,8 @@ dependencies {
     compile 'liji.library.dev:citypickerview:1.1.0'
     compile 'com.qiniu:qiniu-android-sdk:7.3.+'
     compile 'com.github.lecho:hellocharts-library:1.5.8@aar'
+
+    compile 'com.github.amlcurran.showcaseview:library:5.4.3'
     //compile 'com.github.lecho:hellocharts-android:v1.5.8'
 
 }

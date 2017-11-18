@@ -1,6 +1,5 @@
 package com.muxistudio.muxiio.ui;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,14 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.adapter.MessageAdapter;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.model.Comments;
 import com.muxistudio.muxiio.model.Message;
 import com.muxistudio.muxiio.model.ShareList;
@@ -25,7 +23,6 @@ import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.net.BaseUrls;
 import com.muxistudio.muxiio.net.IRetrofit;
 import com.muxistudio.muxiio.utils.AlertDialogUtils;
-import com.muxistudio.muxiio.utils.CacheUtils;
 import com.muxistudio.muxiio.utils.CloseAppUtils;
 import com.muxistudio.muxiio.utils.MyTextUtils;
 import com.muxistudio.muxiio.utils.NetworkUtils;
@@ -132,8 +129,6 @@ public class MessageActivity extends SwipeBackActivity {
         setContentView(R.layout.activity_message);
         CloseAppUtils.activityList.add(this);
         ButterKnife.bind(this);
-        ImageView test = (ImageView) findViewById(R.id.testimage);
-        test.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
         upLoadingProgress.setVisibility(View.VISIBLE);
         initRetrofit();
         initToolbar();
@@ -151,17 +146,14 @@ public class MessageActivity extends SwipeBackActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int id = item.getItemId();
-                switch (id) {
-                    case android.R.id.home:
-                        finish();
-                        break;
-                }
-                return true;
+        toolbar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            switch (id) {
+                case android.R.id.home:
+                    finish();
+                    break;
             }
+            return true;
         });
     }
 
@@ -187,49 +179,39 @@ public class MessageActivity extends SwipeBackActivity {
 
 
     private void initListView(){
-        messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
+        //view : handle of the view item clicked; i :position in adapter
+        messageListView.setOnItemClickListener((adapterView, view, position, l) -> {
+            TextView title= (TextView) view.findViewById(R.id.messenger_title);
+            String titleText = title.getText().toString();
 
-            //view : handle of the view item clicked; i :position in adapter
-            public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-                TextView title= (TextView) view.findViewById(R.id.messenger_title);
-                String titleText = title.getText().toString();
+            TextView content = (TextView) view.findViewById(R.id.messenger_content);
+            String contentText = content.getText().toString();
 
-                TextView content = (TextView) view.findViewById(R.id.messenger_content);
-                String contentText = content.getText().toString();
+            //get the instance
+            Message mMessage = messageList.get(position);
+            final int shareId = mMessage.shareId;
 
-                //get the instance
-                Message mMessage = messageList.get(position);
-                final int shareId = mMessage.shareId;
+            //negative and positive button will cause the alert interface to close
+            AlertDialogUtils.showAlert(MessageActivity.this,
+                    contentText, "设置为已读",null
+                    , (dialogInterface, i) -> {
+                        setCommentRead(shareId,position);
 
-                //negative and positive button will cause the alert interface to close
-                AlertDialogUtils.showAlert(MessageActivity.this,
-                        contentText, "设置为已读",null
-                        , new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                setCommentRead(shareId,position);
-
-                                mesageAdapter.remove(messageList.get(position));
-                                messageNumber.setText(messageList.size()+"");
-                                mesageAdapter.notifyDataSetChanged();
-                            }
+                        mesageAdapter.remove(messageList.get(position));
+                        messageNumber.setText(messageList.size()+"");
+                        mesageAdapter.notifyDataSetChanged();
+                    }
+                    , (dialogInterface, i) -> {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        String link =
+                                messageList.get(0).messengerContent.toString();
+                        if(MyTextUtils.errorLink(link)) {
+                            intent.setData(Uri.parse(messageList.get(0).messengerContent.toString()));
+                            startActivity(intent);
                         }
-                        , new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i){
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                String link =
-                                        messageList.get(0).messengerContent.toString();
-                                if(MyTextUtils.errorLink(link)) {
-                                    intent.setData(Uri.parse(messageList.get(0).messengerContent.toString()));
-                                    startActivity(intent);
-                                }
-                            }
-                        });
+                    });
 
 
-            }
         });
     }
 
@@ -250,14 +232,14 @@ public class MessageActivity extends SwipeBackActivity {
         call.enqueue(new Callback<ShareList>() {
             @Override
             public void onResponse(Call<ShareList> call, Response<ShareList> response) {
-                List<ShareList.SharesBean> list = response.body().getShares();
+                List<SharesBean> list = response.body().getShares();
                 int size = list.size();
                 upLoadingProgress.setVisibility(View.GONE);
                 for (int i = 0; i < size; i++) {
                     //if readnum equals 1
                     int readnum = list.get(i).getRead_num();
                     if (readnum != 0) {
-                        ShareList.SharesBean bean = list.get(i);
+                        SharesBean bean = list.get(i);
                         String commentUrl = bean.getComment();
                         getComment(commentUrl, bean);
                     } else {
@@ -278,7 +260,7 @@ public class MessageActivity extends SwipeBackActivity {
     }
 
     //share -> comment url -> get comments
-    private void getComment(String url, final ShareList.SharesBean bean){
+    private void getComment(String url, final SharesBean bean){
         String strings[] = url.split("/");
         final int shareId = Integer.parseInt(strings[3]);
         Call<Comments> call = iRetrofit.getMessageComment(shareId);

@@ -16,13 +16,11 @@ import android.widget.TextView;
 
 import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.model.LoginInfo;
-import com.muxistudio.muxiio.model.Token;
 import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.net.BaseUrls;
 import com.muxistudio.muxiio.net.MuxiFactory;
 import com.muxistudio.muxiio.utils.EncodingUtils;
 import com.muxistudio.muxiio.utils.PreferenceUtils;
-import com.muxistudio.muxiio.utils.ToastUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.UnsupportedEncodingException;
@@ -30,7 +28,6 @@ import java.io.UnsupportedEncodingException;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -144,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void clearUserInfo(boolean isLogout){
         if(isLogout){
+            PreferenceUtils.storeInteger(R.string.first_login,0);
             PreferenceUtils.storeString(R.string.userName,"NOTHING");
             PreferenceUtils.storeString(R.string.userPassword,"NOTHING");
             PreferenceUtils.storeString(R.string.authToken,"NOTHING");
@@ -164,28 +162,19 @@ public class LoginActivity extends AppCompatActivity {
                     .postLogin(info)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<Token>() {
-                        @Override
-                        public void onCompleted() {
-                        }
-                        @Override
-                        public void onError(Throwable e) {
-                            ToastUtils.showShort("用户名和密码不匹配！");
-                            mUserPwdEdtTxt.setText("");
-                        }
-                        @Override
-                        public void onNext(Token token) {
-                            UserInfo.username = mUserNameEdtTxt.getText().toString();
-                            UserInfo.userpwd  = mUserPwdEdtTxt.getText().toString();
-                            UserInfo.authToken = token.getToken();
-                            UserInfo.userAuthId = token.getUser_id();
-                            PreferenceUtils.storeString(R.string.userName,UserInfo.username);
-                            PreferenceUtils.storeString(R.string.userPassword,UserInfo.userpwd);
-                            PreferenceUtils.storeString(R.string.authToken,token.getToken());
-                            PreferenceUtils.storeInteger(R.integer.authUserId,UserInfo.userAuthId);
-                            ShareActivity.start(LoginActivity.this);
-                            finish();
-                        }
-                    });
+                    .subscribe(token -> {
+                        UserInfo.username = mUserNameEdtTxt.getText().toString();
+                        UserInfo.userpwd  = mUserPwdEdtTxt.getText().toString();
+                        UserInfo.authToken = token.getToken();
+                        UserInfo.userAuthId = token.getUser_id();
+                        //设置登录之后的结果是1
+                        PreferenceUtils.storeInteger(R.string.first_login,1);
+                        PreferenceUtils.storeString(R.string.userName,UserInfo.username);
+                        PreferenceUtils.storeString(R.string.userPassword,UserInfo.userpwd);
+                        PreferenceUtils.storeString(R.string.authToken,token.getToken());
+                        PreferenceUtils.storeInteger(R.integer.authUserId,UserInfo.userAuthId);
+                        ShareActivity.start(LoginActivity.this);
+                        finish();
+                        }, Throwable::printStackTrace,()->{});
         }
     }

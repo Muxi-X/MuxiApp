@@ -8,10 +8,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextPaint;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,14 +34,17 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.adapter.ShareAdapter;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.listener.MyItemClickListener;
-import com.muxistudio.muxiio.model.CreateId;
 import com.muxistudio.muxiio.model.DeleteInfo;
 import com.muxistudio.muxiio.model.LoginInfo;
 import com.muxistudio.muxiio.model.RegisterInfo;
@@ -59,17 +65,16 @@ import com.muxistudio.muxiio.utils.ToastUtils;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.muxistudio.muxiio.R.menu.share;
@@ -81,8 +86,8 @@ public class ShareActivity extends AppCompatActivity
     private boolean isStatusClicked = false;
     private boolean isShareClicked = false;
     public static Activity INSTANCE;
-    private List<ShareList.SharesBean> shareBeanList = new ArrayList<>();
-    private List<ShareList.SharesBean> templist = new ArrayList<>();
+    private List<SharesBean> shareBeanList = new ArrayList<>();
+    private List<SharesBean> templist = new ArrayList<>();
     private LinearLayoutManager manager;
     private ShareAdapter adapter = new ShareAdapter(shareBeanList);
     private final int VISIBLE = 1;
@@ -94,21 +99,12 @@ public class ShareActivity extends AppCompatActivity
     private DeleteBroadCastReceiver receiver = new DeleteBroadCastReceiver();
     private int deleteShareId = -1;
     private int deletePostion = -1;
-    private DialogInterface.OnClickListener deletePositiveListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            dialogInterface.dismiss();
-            shareDelete(deleteShareId, deletePostion);
-        }
+    private DialogInterface.OnClickListener deletePositiveListener = (dialogInterface, i) -> {
+        dialogInterface.dismiss();
+        shareDelete(deleteShareId, deletePostion);
     };
-    private DialogInterface.OnClickListener deleteNegetiveListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialogInterface, int i) {
-            dialogInterface.dismiss();
-        }
-    };
+    private DialogInterface.OnClickListener deleteNegetiveListener = (dialogInterface, i) -> dialogInterface.dismiss();
     private String sort = "";
-
     @BindView(R.id.cl_share)
     CoordinatorLayout clShare;
     @BindView(R.id.uploading_hint)
@@ -142,6 +138,7 @@ public class ShareActivity extends AppCompatActivity
         inflater.inflate(share,menu);
         return true;
     }
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +151,8 @@ public class ShareActivity extends AppCompatActivity
         shareAuth();
         initDrawer();
         initSwipeLayout();
+        //初始化所有的showcaseView
+        initShowCaseView();
         loadingView.setVisibility(View.VISIBLE);
         //向shareBeanList中加载数据
         loadShareData();
@@ -186,7 +185,7 @@ public class ShareActivity extends AppCompatActivity
                 break;
             case R.id.product:
                 getShareList("product");
-                sort = "product";;
+                sort = "product";
                 //Collections.sort(shareBeanList);
                 adapter.setList(shareBeanList);
                 adapter.notifyDataSetChanged();
@@ -304,8 +303,6 @@ public class ShareActivity extends AppCompatActivity
             }
             shareBeanList = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,SHARE_TOTAL);
             //这个储存的方法暂时是失效的...
-            ImageView fuck = mUserAvatarImg;
-            Bitmap temp = CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY);
              mUserAvatarImg.setImageBitmap(CacheUtils.readBitmapCache(CacheUtils.BITMAP_KEY));
             NetworkUtils.initPicture(ShareActivity.this,UserInfo.userAvatarUrl,mUserAvatarImg,
                     loadingView);
@@ -324,7 +321,8 @@ public class ShareActivity extends AppCompatActivity
     //另一个是从文件中读取缓存的数据
     private void loadShareData() {
         try {
-            shareBeanList = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,20);
+            templist  = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,20);
+            shareBeanList = CacheUtils.readListCache(CacheUtils.SHARE_TEMPLIST_KEY,20);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -359,11 +357,12 @@ public class ShareActivity extends AppCompatActivity
 
     }
     //判断list和 templist比较 然后弹出 是否有更新
-    private void loadData(List<ShareList.SharesBean> list) throws FileNotFoundException {
+    private void loadData(List<SharesBean> list) throws FileNotFoundException {
         if(shareBeanList.isEmpty()){
             add(list,shareBeanList);
             add(list,templist);
-            //Collections.sort(shareBeanList);
+            Collections.sort(shareBeanList);
+            Collections.sort(templist);
             adapter.setList(shareBeanList);
             adapter.notifyDataSetChanged();
             CacheUtils.saveListCache(CacheUtils.SHARE_LIST_KEY,shareBeanList);
@@ -372,6 +371,8 @@ public class ShareActivity extends AppCompatActivity
             return;
         }
         templist = CacheUtils.readListCache(CacheUtils.SHARE_TEMPLIST_KEY,20);
+        Log.d("lists", "loadData: "+shareBeanList.get(0).getDate());
+        Log.d("lists","loadData: "+templist.get(0).getDate());
         if(ListUtils.equals(shareBeanList,list)&&!templist.isEmpty()){
             ToastUtils.showShort("没有最新的分享了");
         }else {
@@ -395,6 +396,7 @@ public class ShareActivity extends AppCompatActivity
     }
     //在oncreate从文件中向shareBeanList加载数据
     private void loadData() throws FileNotFoundException {
+        templist = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,20);
         shareBeanList = CacheUtils.readListCache(CacheUtils.SHARE_LIST_KEY,20);
         if(shareBeanList.isEmpty()){
             getShareList(sort);
@@ -431,13 +433,72 @@ public class ShareActivity extends AppCompatActivity
         mRefreshLayout.setColorSchemeColors(Color.GRAY, Color.BLACK, Color.BLUE);
         mRefreshLayout.setDistanceToTriggerSync(100);
         mRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
-        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                NetworkUtils.makeToast(NetworkUtils.getNetworkStatus());
-                getShareList(sort);
-            }
+        mRefreshLayout.setOnRefreshListener(() -> {
+            NetworkUtils.makeToast(NetworkUtils.getNetworkStatus());
+            getShareList(sort);
         });
+    }
+
+    //设置一些showcaseview中的东西
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+    private void initShowCaseView(){
+        int ifFirstLogin = PreferenceUtils.readInteger(R.string.first_login);
+        if(ifFirstLogin>0){
+            View view = findViewById(R.id.v_target_1);
+
+            TextPaint contentPaint = new TextPaint(),titlePaint = new TextPaint();
+            contentPaint.setColor(getResources().getColor(R.color.white));
+            titlePaint.setColor(getResources().getColor(R.color.white));
+
+            Button button3 = new Button(this);
+            //给第一个RecyclerView的item这个showcaseview
+            ShowcaseView showCaseView1 = new ShowcaseView.Builder(this)
+                    .setContentTitlePaint(titlePaint)
+                    .setContentTextPaint(contentPaint)
+                    .setTarget(new ViewTarget(view))
+                    .setContentText("长按可以查看分享的详情")
+                    .setContentTitle("分享条目")
+                    .replaceEndButton(button3)
+                    .setStyle(R.style.Custom_semi_transparent_demo)
+                    .build();
+
+
+            showCaseView1.hide();
+
+            //给floatingActionButton设置view
+            Button button = new Button(this);
+            button.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg_circle_fab));
+            ShowcaseView showCaseView2 =new ShowcaseView.Builder(this)
+                    .setTarget(new ViewTarget(fabBtn))
+                    .setContentText("点击这个可以新增一个分享")
+                    .setContentTextPaint(contentPaint)
+                    .setContentTitlePaint(titlePaint)
+                    .setContentTitle("Add 新增分享")
+                    .hideOnTouchOutside()
+                    .setStyle(R.style.Custom_semi_transparent_demo)
+                    .replaceEndButton(button)
+                    .build();
+
+
+            Button button1 = new Button(this);
+            ShowcaseView showcaseView3 = new ShowcaseView.Builder(this)
+                    .setTarget(new ViewTarget(findViewById(R.id.v_target_2)))
+                    .setContentText("点击可以选择不同的组别查看分享")
+                    .setContentTextPaint(contentPaint)
+                    .setContentTitlePaint(titlePaint)
+                    .setContentTitle("组别选择")
+                    .hideOnTouchOutside()
+                    .replaceEndButton(button1)
+                    .setStyle(R.style.Custom_semi_transparent_demo)
+                    .build();
+            showcaseView3.hide();
+
+            button.setOnClickListener(v->{button.setVisibility(View.VISIBLE);showCaseView1.show();showCaseView2.hide();});
+            button1.setOnClickListener(v->{showCaseView1.hide();showcaseView3.setVisibility(View.GONE);});
+            button3.setOnClickListener(v -> {showCaseView1.hide();showcaseView3.show();});
+            PreferenceUtils.storeInteger(R.string.first_login,0);
+
+        }
     }
     private void initRecyclerView() {
         manager = new LinearLayoutManager(this);
@@ -464,7 +525,6 @@ public class ShareActivity extends AppCompatActivity
         animator.setMoveDuration(300);
         recyclerView.setItemAnimator(animator);
     }
-
     private void initAdapterListener(ShareAdapter adapter) {
         adapter.setOnItemClickListener(new MyItemClickListener() {
             @Override
@@ -500,13 +560,10 @@ public class ShareActivity extends AppCompatActivity
         View view = navigationView.getHeaderView(0);
         mUserNameTxt = (TextView) view.findViewById(R.id.share_username);
         mUserAvatarImg = (CircleImageView) view.findViewById(R.id.share_user_avatar);
-        mUserAvatarImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(ShareActivity.this, MyProfileActivity.class);
-                startActivity(intent);
-            }
+        mUserAvatarImg.setOnClickListener(view1 -> {
+            Intent intent = new Intent();
+            intent.setClass(ShareActivity.this, MyProfileActivity.class);
+            startActivity(intent);
         });
         mUserNameTxt.setText(PreferenceUtils.readString(R.string.userName));
     }
@@ -547,18 +604,15 @@ public class ShareActivity extends AppCompatActivity
          iRetrofit.postShareRegister(info)
                  .subscribeOn(Schedulers.io())
                  .observeOn(Schedulers.io())
-                 .flatMap(new Func1<Response<CreateId>, Observable<Token>>() {
-                    @Override
-                    public Observable<Token> call(Response<CreateId> createIdResponse) {
-                        int code = createIdResponse.code();
-                        if (code == 200 || code == 401 || code == 403 || code == 402) {
-                            return iRetrofit.postShareLogin(new LoginInfo(username,UserInfo.userpwd));
-                        }else{
-                            ToastUtils.showShort("Share 注册失败");
-                            return null;
-                        }
-                    }
-                })
+                 .flatMap(createIdResponse -> {
+                     int code = createIdResponse.code();
+                     if (code == 200 || code == 401 || code == 403 || code == 402) {
+                         return iRetrofit.postShareLogin(new LoginInfo(username,UserInfo.userpwd));
+                     }else{
+                         ToastUtils.showShort("Share 注册失败");
+                         return null;
+                     }
+                 })
                  .subscribeOn(Schedulers.io())
                  .observeOn(AndroidSchedulers.mainThread())
                  .subscribe(
@@ -611,25 +665,13 @@ public class ShareActivity extends AppCompatActivity
         observable
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ShareList>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-                    @Override
-                    public void onError(Throwable e) {
-                    }
-
-                    @Override
-                    public void onNext(ShareList list) {
-                        try {
-                            loadData(list.getShares());
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        loadingView.setVisibility(View.GONE);
-                        mRefreshLayout.setRefreshing(false);
-                    }
-                });
+                .subscribe(shareList -> {try {
+                    loadData(shareList.getShares());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                    loadingView.setVisibility(View.GONE);
+                    mRefreshLayout.setRefreshing(false);},Throwable::printStackTrace,()->{});
     }
     class DeleteBroadCastReceiver extends BroadcastReceiver {
         @Override

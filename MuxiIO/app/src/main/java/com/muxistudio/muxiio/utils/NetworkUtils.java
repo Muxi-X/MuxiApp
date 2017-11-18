@@ -11,6 +11,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -100,6 +101,8 @@ public class NetworkUtils {
                             Bitmap temp = bitmap;
                             imageView.setImageBitmap(temp);
                             CacheUtils.saveBitmapCache(CacheUtils.BITMAP_KEY,temp);
+                            Log.d("bitmap", "onBitmapLoaded: "+ CacheUtils.readBitmapCache(CacheUtils
+                            .BITMAP_KEY));
                             upLoadingHints.setVisibility(View.GONE);
                         }
 

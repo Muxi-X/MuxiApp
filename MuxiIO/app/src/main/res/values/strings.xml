@@ -31,6 +31,7 @@
     <item type="string" name="authToken">3</item>
     <item type="integer" name="authUserId">4</item>
     <item type="integer" name="last_time_message_number">5</item>
+    <item type="string" name="first_login">com.muxistudio.login</item>
 
     <string name="profile_name">我是昵称</string>
     <string name="profile_blog">博客：</string>

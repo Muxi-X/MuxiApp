@@ -1,6 +1,6 @@
 package com.muxistudio.muxiio.utils;
 
-import com.muxistudio.muxiio.model.ShareList;
+import com.muxistudio.muxiio.data.SharesBean;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class ListUtils {
             target.add(source.get(i));
         }
     }
-    public static boolean equals(List<ShareList.SharesBean> list1, List<ShareList.SharesBean>list2){
+    public static boolean equals(List<SharesBean> list1, List<SharesBean>list2){
         int size1 = list1.size();
         int size2 = list2.size();
         if(size1!=size2)

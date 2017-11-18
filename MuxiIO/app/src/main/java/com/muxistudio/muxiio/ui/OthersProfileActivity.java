@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.muxistudio.muxiio.R;
 import com.muxistudio.muxiio.adapter.OneShareAdapter;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.model.ShareList;
 import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.model.UserProfile;
@@ -43,7 +44,7 @@ public class OthersProfileActivity extends SwipeBackActivity {
     private String mOthersProfileZhihu;
     private String mOthersProfileGithub;
     private RecyclerView mRecyclerView;
-    private List<ShareList.SharesBean> mOneShareList = new ArrayList<>();
+    private List<SharesBean> mOneShareList = new ArrayList<>();
     private OneShareAdapter mOneShareAdapter;
     private int mOtherPeopleId = 0;
 
@@ -230,7 +231,7 @@ public class OthersProfileActivity extends SwipeBackActivity {
                     }
                     @Override
                     public void onNext(ShareList list1) {
-                        List<ShareList.SharesBean> list = list1.getShares();
+                        List<SharesBean> list = list1.getShares();
                         int size =list.size();
                         for (int i = size - 1;i >= 0; i--) {
                             mOneShareList.add(list.get(i));

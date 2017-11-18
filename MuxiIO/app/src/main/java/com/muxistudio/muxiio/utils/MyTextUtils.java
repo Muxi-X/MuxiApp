@@ -58,6 +58,12 @@ public class MyTextUtils {
         if(month.equals("Sep")){
             monthN = 9;
         }
+        if(month.equals("Nov")){
+            monthN = 11;
+        }
+        if(month.equals("Dec")){
+            monthN = 12;
+        }
         return monthN;
     }
 
@@ -262,5 +268,36 @@ public class MyTextUtils {
     public static String formatDateUsingSlash(String date){
         String datePieces[] = date.split(" ");
         return String.format("%02d",Integer.parseInt(datePieces[1])) +"/"+ datePieces[0];
+    }
+
+    //Thu, 16 Nov 2017 10:41:08 GMT
+    //处理这里的时间格式变成两个部分 ：日期的最小比较单位是天 时间的最小比较单位是秒
+    //基准时间是2000 年1月 1日
+    public static int getCompareBasis(String date1,String date2){
+        String datePieces1[] = date1.split(" ");
+        String datePieces2[]  = date2.split(" ");
+        int day1 = Integer.parseInt(datePieces1[3])*365 + getMonth(datePieces1[2])*30 +
+                Integer.parseInt(datePieces1[1]);
+        int day2 = Integer.parseInt(datePieces2[3])*365 + getMonth(datePieces2[2])*30 +
+                Integer.parseInt(datePieces2[1]);
+        if(day1>day2){
+            return -1;
+        }
+        if(day1==day2){
+            String timePieces1[],timePieces2[];
+            timePieces1 = datePieces1[4].split(":");
+            timePieces2 = datePieces2[4].split(":");
+            long second1 = Integer.parseInt(timePieces1[0])*3600
+                    + Integer.parseInt(timePieces1[1])*60 + Integer.parseInt(timePieces1[2]);
+            long second2 = Integer.parseInt(timePieces2[0])*3600
+                    + Integer.parseInt(timePieces2[1])*60 + Integer.parseInt(timePieces2[2]);
+            if(second1>second2){
+                return -1;
+            }else{
+                return 1;
+            }
+        }else{
+            return 1;
+        }
     }
 }

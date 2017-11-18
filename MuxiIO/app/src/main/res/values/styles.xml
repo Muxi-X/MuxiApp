@@ -18,6 +18,12 @@
         <item name="android:tint">#ffffff</item>
     </style>
 
+    <style name="Custom_semi_transparent_demo" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">#e7415a9f</item>
+        <item name="sv_showcaseColor">#25467A</item>
+        <item name="sv_buttonText">Close</item>
+    </style>
+
     <style name="MyActionBar.MenuTextStyle"
         parent="style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/colorLightPurple</item>

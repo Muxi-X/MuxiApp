@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.muxistudio.muxiio.R;
+import com.muxistudio.muxiio.data.SharesBean;
 import com.muxistudio.muxiio.listener.MyItemClickListener;
-import com.muxistudio.muxiio.model.ShareList;
 import com.muxistudio.muxiio.model.UserInfo;
 import com.muxistudio.muxiio.ui.AddShareActivity;
 import com.muxistudio.muxiio.ui.CommentActivity;
@@ -36,14 +36,14 @@ import java.util.List;
  */
 
 public class ShareAdapter extends RecyclerView.Adapter {
-    private List<ShareList.SharesBean> sharesBeanList = new ArrayList<>();
+    private List<SharesBean> sharesBeanList = new ArrayList<>();
     private Context context;
     private int resid =  R.layout.item_share_recycler;
     private MyItemClickListener myItemClickListener;
     public static String DELETE_ACTION = "deleteSpecificShare";
 
     private ShareViewHolder shareViewHolder;
-    public ShareAdapter(List<ShareList.SharesBean> list) {
+    public ShareAdapter(List<SharesBean> list) {
         this.sharesBeanList = list;
     }
     @Override
@@ -56,7 +56,7 @@ public class ShareAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (sharesBeanList.size() != 0) {
-            final ShareList.SharesBean object = sharesBeanList.get(position);
+            final SharesBean object = sharesBeanList.get(position);
             shareViewHolder = (ShareViewHolder) holder;
             shareViewHolder.mShareUsernameTxt.setText(object.getUsername());
             shareViewHolder.mShareContentBack.setText(object.getShare());
@@ -225,10 +225,10 @@ public class ShareAdapter extends RecyclerView.Adapter {
                     .into(shareViewHolder.mUserAvatarImg);
         }
     }
-    public List<ShareList.SharesBean> getList(){
+    public List<SharesBean> getList(){
         return sharesBeanList;
     }
-    public void setList(List<ShareList.SharesBean> list){
+    public void setList(List<SharesBean> list){
         sharesBeanList = list;
     }
 }
